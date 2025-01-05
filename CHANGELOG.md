@@ -15,7 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Feature
 
-- Enable Japanese Input in Node Components (@hangingma)
+- Enable Japanese Input in Node Components by [@hangingma](https://github.com/hangingman)
+- better refractor
 
 ## [0.5.7] - 2024-07-20
 
