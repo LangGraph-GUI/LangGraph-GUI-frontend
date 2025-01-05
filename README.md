@@ -1,8 +1,8 @@
 # LangGraph-GUI-frontend (ReactFlow)
 
-This repo is based on [LangGraph-GUI-reactflow](https://github.com/LangGraph-GUI/LangGraph-GUI-reactflow) with better refractor
+**you need git clone recursively**, the dep repo is at ```src/Graph```
 
-you need git clone recursively, the dep repo is at ```src/Graph```
+This repo is based on [LangGraph-GUI-reactflow](https://github.com/LangGraph-GUI/LangGraph-GUI-reactflow) with better refractor
 
 LangGraph-GUI is a user-friendly interface for managing and visualizing Node-Edge workflows with LangGraph. It supports creating, editing, and running workflows.
 
