@@ -6,33 +6,55 @@ class ConfigManager {
             return ConfigManager.instance;
         }
 
-        this.llmModel = localStorage.getItem('llmModel') || 'gemma2';
-        this.backendScript = localStorage.getItem('backendScript') || 'cd working && python backend.py --graph graph.json --llm gemma2 --tee output.log';
-        this.workingFolder = localStorage.getItem('workingFolder') || 'working';
+        // Initialize default values or get them from localStorage
+        this.llmModel = localStorage.getItem('llmModel') || 'gpt';
+        this.apiKey = localStorage.getItem('apiKey') || '<empty>';
+        
+        // Add username retrieval
+        this.fetchUsername();
 
         ConfigManager.instance = this;
     }
 
+    // Method to fetch username from Nginx API
+    async fetchUsername() {
+        try {
+            const response = await fetch('/api/username', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                this.username = data.username;
+            } else {
+                console.error('Failed to fetch username:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching username:', error);
+        }
+    }
+
+    // Method to get the current settings
     getSettings() {
         return {
+            username: this.username,
             llmModel: this.llmModel,
-            backendScript: this.backendScript,
-            workingFolder: this.workingFolder,
+            apiKey: this.apiKey,
         };
     }
 
-    setSettings(newLlmModel, newBackendScript, newWorkingFolder) {
+    // Method to update settings
+    setSettings(newLlmModel, newapiKey) {
         this.llmModel = newLlmModel;
-        this.backendScript = newBackendScript;
-        this.workingFolder = newWorkingFolder;
+        this.apiKey = newapiKey;
 
         localStorage.setItem('llmModel', newLlmModel);
-        localStorage.setItem('backendScript', newBackendScript);
-        localStorage.setItem('workingFolder', newWorkingFolder);
+        localStorage.setItem('apiKey', newapiKey);
     }
 }
 
 const instance = new ConfigManager();
-// Object.freeze(instance); // Remove this line to allow property modifications
-
 export default instance;
