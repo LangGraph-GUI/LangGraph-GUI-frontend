@@ -41,7 +41,7 @@ function ConfigWindow({ onClose }) {
         </div>
         <div className="mb-2">
           <label className="block mb-1 text-sm">
-            OpenAI Key:
+            API Key:
             <input
               type="text"
               value={apiKey}
