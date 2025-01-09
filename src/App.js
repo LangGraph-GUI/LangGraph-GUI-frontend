@@ -3,8 +3,11 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import './App.css';
-
 import React from 'react';
+
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 
 import { GraphManagerProvider } from './Graph/GraphManager';
 import ConfigManager from './ConfigManager';
@@ -37,15 +40,17 @@ function App() {
 
 
   return (
-    <GraphManagerProvider>
+    <Provider store={store}>
       <Router basename="/">
-        <div className="App">
-          <ConditionalStrictMode>
-            <AppRouter />
-          </ConditionalStrictMode>
-        </div>
+        <GraphManagerProvider>
+          <div className="App">
+            <ConditionalStrictMode>
+              <AppRouter />
+            </ConditionalStrictMode>
+          </div>
+        </GraphManagerProvider>
       </Router>
-    </GraphManagerProvider>
+    </Provider>
   );
 }
 
