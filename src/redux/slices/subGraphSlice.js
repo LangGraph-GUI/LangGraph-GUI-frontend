@@ -45,8 +45,11 @@ const subGraphSlice = createSlice({
       state.subGraphs = state.subGraphs.filter(graph => graph.graphName !== action.payload);
     },
     initSubGraphs: () => initialState, // Add reset reducer
+    setSubGraphs: (state, action) => { // New reducer to replace all subGraphs
+       state.subGraphs = action.payload;
+   },
   },
 });
 
-export const { addSubGraph, updateSubGraph, removeSubGraph, initSubGraphs } = subGraphSlice.actions;
+export const { addSubGraph, updateSubGraph, removeSubGraph, initSubGraphs, setSubGraphs } = subGraphSlice.actions;
 export default subGraphSlice.reducer;

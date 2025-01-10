@@ -32,3 +32,22 @@ The page will reload when you make changes.\
 ## Chnage Log
 
 see: [root repo CHANGELOG](https://github.com/LangGraph-GUI/LangGraph-GUI/blob/main/CHANGELOG.md)
+
+
+## Debug Redux
+
+* ```npm install @redux-devtools/extension```
+* in browser, F12 and type 
+  * ```window.store.getState().subGraphs```
+* ```store.js``` : 
+  ```
+  // redux/store.js
+  import { composeWithDevTools } from '@redux-devtools/extension';
+
+  export const store = configureStore(
+    // other code
+    composeWithDevTools()
+  );
+
+  window.store = store;
+  ```
