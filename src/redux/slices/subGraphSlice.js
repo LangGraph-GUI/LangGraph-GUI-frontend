@@ -6,7 +6,7 @@ const initialState = {
     subGraphs: [{ 
         graphName: "root", 
         nodes: [],
-        node_counter: 1,
+        serial_number: 0,
     }],
 };
 
@@ -16,7 +16,7 @@ const subGraphSlice = createSlice({
   reducers: {
     
     addSubGraph: (state, action) => {
-        const { graphName, nodes, node_counter } = action.payload;
+        const { graphName, nodes, serial_number } = action.payload;
 
         // Check if a subgraph with the same name already exists
         const graphExists = state.subGraphs.some(graph => graph.graphName === graphName);
@@ -24,21 +24,21 @@ const subGraphSlice = createSlice({
             console.error(`Subgraph with name '${graphName}' already exists. Cannot add.`);
           return; // Prevent adding if name exists
         }
-        state.subGraphs.push({graphName, nodes, node_counter});
+        state.subGraphs.push({graphName, nodes, serial_number});
     },
     updateSubGraph: (state, action) => {
-        const { graphName, nodes, node_counter } = action.payload;
+        const { graphName, nodes, serial_number } = action.payload;
          const existingGraphIndex = state.subGraphs.findIndex(graph => graph.graphName === graphName);
       
         if(existingGraphIndex !== -1){
             state.subGraphs[existingGraphIndex] = {
               graphName: graphName,
               nodes: nodes,
-              node_counter: node_counter,
+              serial_number: serial_number,
             }
         } else {
             // If graph doesnt exist, add it
-            state.subGraphs.push({graphName: graphName, nodes: nodes, node_counter: node_counter})
+            state.subGraphs.push({graphName: graphName, nodes: nodes, serial_number: serial_number})
         }
     },
     removeSubGraph: (state, action) => {
