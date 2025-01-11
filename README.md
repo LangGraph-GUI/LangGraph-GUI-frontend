@@ -28,6 +28,11 @@ npm run dev
 
 ## Debug Redux
 
+at ```package.json```
+```
+"dev": "NODE_ENV=DEBUG vite",
+```
+
 in browser, F12 and type 
 
 ```

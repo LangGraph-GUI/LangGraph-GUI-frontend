@@ -4,14 +4,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Node, Edge } from '@xyflow/react';
 
 interface SubGraphState {
-    graphName: string;
-    nodes: Node[];
-    edges: Edge[];
-    serial_number: number;
+  graphName: string;
+  nodes: Node[];
+  edges: Edge[];
+  serial_number: number;
 }
 
+interface SubGraphSliceState {
+  subGraphs: SubGraphState[];
+}
 
-const initialState: { subGraphs: SubGraphState[] } = {
+const initialState: SubGraphSliceState = {
     subGraphs: [{
         graphName: "root",
         nodes: [
@@ -23,63 +26,28 @@ const initialState: { subGraphs: SubGraphState[] } = {
     }],
 };
 
-
-
 const subGraphSlice = createSlice({
     name: 'subGraphs',
     initialState,
     reducers: {
-        addSubGraph: (state, action: PayloadAction<{ graphName: string, nodes: Node[], edges: Edge[], serial_number: number }>) => {
-            const { graphName, nodes, edges, serial_number } = action.payload;
-
-            const graphExists = state.subGraphs.some(graph => graph.graphName === graphName);
-            if (graphExists) {
-                console.error(`Subgraph with name '${graphName}' already exists. Cannot add.`);
-                return;
-            }
-            state.subGraphs.push({ graphName, nodes, edges, serial_number });
+        addSubGraph: (state, action: PayloadAction<SubGraphState>) => {
+            state.subGraphs.push(action.payload);
         },
-        updateSubGraph: (state, action: PayloadAction<{ graphName: string, nodes: Node[], edges: Edge[], serial_number: number }>) => {
-            const { graphName, nodes, edges, serial_number } = action.payload;
-            const existingGraphIndex = state.subGraphs.findIndex(graph => graph.graphName === graphName);
-
-            if (existingGraphIndex !== -1) {
-                state.subGraphs[existingGraphIndex] = {
-                    graphName: graphName,
-                    nodes: nodes,
-                    edges: edges,
-                    serial_number: serial_number,
-                };
-            } else {
-                state.subGraphs.push({ graphName: graphName, nodes: nodes, edges: edges, serial_number: serial_number });
+        updateSubGraph: (state, action: PayloadAction<{ index: number; updatedGraph: SubGraphState }>) => {
+            const { index, updatedGraph } = action.payload;
+            if(index >=0 && index < state.subGraphs.length){
+                state.subGraphs[index] = updatedGraph;
             }
         },
-        removeSubGraph: (state, action: PayloadAction<string>) => {
-            state.subGraphs = state.subGraphs.filter(graph => graph.graphName !== action.payload);
+        removeSubGraph: (state, action: PayloadAction<number>) => {
+            state.subGraphs = state.subGraphs.filter((_, index) => index !== action.payload);
         },
         initSubGraphs: () => initialState,
-        setSubGraphs: (state, action: PayloadAction<SubGraphState[]>) => {
-            state.subGraphs = action.payload;
-        },
-        updateNodesInSubGraph: (state, action: PayloadAction<{ graphName: string, nodes: Node[] }>) => {
-            const { graphName, nodes } = action.payload;
-            const existingGraphIndex = state.subGraphs.findIndex(graph => graph.graphName === graphName);
-
-            if (existingGraphIndex !== -1) {
-                state.subGraphs[existingGraphIndex].nodes = nodes;
-            }
-        },
-        updateEdgesInSubGraph: (state, action: PayloadAction<{ graphName: string, edges: Edge[] }>) => {
-          const { graphName, edges } = action.payload;
-          const existingGraphIndex = state.subGraphs.findIndex(graph => graph.graphName === graphName);
-
-          if(existingGraphIndex !== -1) {
-            state.subGraphs[existingGraphIndex].edges = edges;
-          }
-      }
+        setSubGraphs: (state, action: PayloadAction<SubGraphState[]>) =>{
+            state.subGraphs = action.payload
+        }
     },
 });
 
-
-export const { addSubGraph, updateSubGraph, removeSubGraph, initSubGraphs, setSubGraphs, updateNodesInSubGraph, updateEdgesInSubGraph } = subGraphSlice.actions;
+export const { addSubGraph, updateSubGraph, removeSubGraph, initSubGraphs, setSubGraphs } = subGraphSlice.actions;
 export default subGraphSlice.reducer;
