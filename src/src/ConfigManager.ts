@@ -17,10 +17,10 @@ class ConfigManager {
             return ConfigManager.instance;
         }
 
-       // If the local storage has data use it, otherwise set to a default.
+        // If the local storage has data use it, otherwise set to a default.
         const storedLlmModel = localStorage.getItem('llmModel');
         if(storedLlmModel) {
-             this.llmModel = storedLlmModel;
+            this.llmModel = storedLlmModel;
         }
 
         const storedApiKey = localStorage.getItem('apiKey');
@@ -33,7 +33,7 @@ class ConfigManager {
         ConfigManager.instance = this;
     }
   
-      // Method to fetch username from Nginx API
+    // Method to fetch username from Nginx API
     private async fetchUsername() {
         try {
             const response = await fetch('/api/username', {
@@ -50,11 +50,11 @@ class ConfigManager {
                 console.error('Failed to fetch username:', response.status);
             }
         } catch (error) {
-           if(error instanceof Error) {
-             console.error('Error fetching username:', error.message);
-           } else {
-             console.error('Error fetching username:', error)
-           }
+            if(error instanceof Error) {
+                console.error('Error fetching username:', error.message);
+            } else {
+                console.error('Error fetching username:', error)
+            }
         }
     }
 
