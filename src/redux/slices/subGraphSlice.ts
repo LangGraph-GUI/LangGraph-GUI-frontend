@@ -3,56 +3,61 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Node, Edge } from '@xyflow/react';
 
-interface SubGraphState {
+interface SubGraph {
     graphName: string;
     nodes: Node[];
     edges: Edge[];
     serial_number: number;
 }
 
-interface SubGraphSliceState {
-    subGraphs: SubGraphState[];
+interface SubGraphState {
+    subGraphs: SubGraph[];
+    currentGraphName: string; // Changed to string
 }
 
-const initialState: SubGraphSliceState = {
-    subGraphs: [{
-        graphName: "root",
-        nodes: [],
-        edges: [],
-        serial_number: 0,
-    }],
+const initialState: SubGraphState = {
+    subGraphs: [],
+    currentGraphName: "root", // Default to 'root'
 };
-
 
 const subGraphSlice = createSlice({
     name: 'subGraphs',
     initialState,
     reducers: {
         addSubGraph: (state, action: PayloadAction<string>) => {
-            const newGraph:SubGraphState = {
+            state.subGraphs.push({
                 graphName: action.payload,
                 nodes: [],
                 edges: [],
-                serial_number: 0
-            };
-            state.subGraphs.push(newGraph);
+                serial_number: 0,
+            });
+            if (!state.currentGraphName) state.currentGraphName = action.payload;
         },
-        updateSubGraph: (state, action: PayloadAction<{ graphName: string; updatedGraph: Omit<SubGraphState, "graphName"> }>) => {
+        updateSubGraph: (
+            state,
+            action: PayloadAction<{ graphName: string; updatedGraph: SubGraph }>
+        ) => {
             const { graphName, updatedGraph } = action.payload;
             const graphIndex = state.subGraphs.findIndex((graph) => graph.graphName === graphName);
             if (graphIndex !== -1) {
-                state.subGraphs[graphIndex] = { ...state.subGraphs[graphIndex], ...updatedGraph };
+                state.subGraphs[graphIndex] = {
+                    ...updatedGraph,
+                };
             }
         },
         removeSubGraph: (state, action: PayloadAction<string>) => {
-            state.subGraphs = state.subGraphs.filter((graph) => graph.graphName !== action.payload);
+            const graphName = action.payload;
+            state.subGraphs = state.subGraphs.filter((graph) => graph.graphName !== graphName);
+            if (state.currentGraphName === graphName) {
+                state.currentGraphName = "root";
+            }
         },
-        initSubGraphs: () => initialState,
-        setSubGraphs: (state, action: PayloadAction<SubGraphState[]>) => {
-            state.subGraphs = action.payload
-        }
+        setCurrentGraphName: (state, action: PayloadAction<string>) => { // Changed to string
+            state.currentGraphName = action.payload;
+        },
     },
 });
 
-export const { addSubGraph, updateSubGraph, removeSubGraph, initSubGraphs, setSubGraphs } = subGraphSlice.actions;
+export const { addSubGraph, updateSubGraph, removeSubGraph, setCurrentGraphName } =
+    subGraphSlice.actions;
 export default subGraphSlice.reducer;
