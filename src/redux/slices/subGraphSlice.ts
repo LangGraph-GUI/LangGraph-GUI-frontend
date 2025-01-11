@@ -4,46 +4,51 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Node, Edge } from '@xyflow/react';
 
 interface SubGraphState {
-  graphName: string;
-  nodes: Node[];
-  edges: Edge[];
-  serial_number: number;
+    graphName: string;
+    nodes: Node[];
+    edges: Edge[];
+    serial_number: number;
 }
 
 interface SubGraphSliceState {
-  subGraphs: SubGraphState[];
+    subGraphs: SubGraphState[];
 }
 
 const initialState: SubGraphSliceState = {
     subGraphs: [{
         graphName: "root",
-        nodes: [
-            { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-            { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-        ],
-        edges: [{ id: 'e1-2', source: '1', target: '2' }],
+        nodes: [],
+        edges: [],
         serial_number: 0,
     }],
 };
+
 
 const subGraphSlice = createSlice({
     name: 'subGraphs',
     initialState,
     reducers: {
-        addSubGraph: (state, action: PayloadAction<SubGraphState>) => {
-            state.subGraphs.push(action.payload);
+        addSubGraph: (state, action: PayloadAction<string>) => {
+            const newGraph:SubGraphState = {
+                graphName: action.payload,
+                nodes: [],
+                edges: [],
+                serial_number: 0
+            };
+            state.subGraphs.push(newGraph);
         },
-        updateSubGraph: (state, action: PayloadAction<{ index: number; updatedGraph: SubGraphState }>) => {
-            const { index, updatedGraph } = action.payload;
-            if(index >=0 && index < state.subGraphs.length){
-                state.subGraphs[index] = updatedGraph;
+        updateSubGraph: (state, action: PayloadAction<{ graphName: string; updatedGraph: Omit<SubGraphState, "graphName"> }>) => {
+            const { graphName, updatedGraph } = action.payload;
+            const graphIndex = state.subGraphs.findIndex((graph) => graph.graphName === graphName);
+            if (graphIndex !== -1) {
+                state.subGraphs[graphIndex] = { ...state.subGraphs[graphIndex], ...updatedGraph };
             }
         },
-        removeSubGraph: (state, action: PayloadAction<number>) => {
-            state.subGraphs = state.subGraphs.filter((_, index) => index !== action.payload);
+        removeSubGraph: (state, action: PayloadAction<string>) => {
+            state.subGraphs = state.subGraphs.filter((graph) => graph.graphName !== action.payload);
         },
         initSubGraphs: () => initialState,
-        setSubGraphs: (state, action: PayloadAction<SubGraphState[]>) =>{
+        setSubGraphs: (state, action: PayloadAction<SubGraphState[]>) => {
             state.subGraphs = action.payload
         }
     },
