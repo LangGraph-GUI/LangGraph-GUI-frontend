@@ -15,8 +15,8 @@ const AppRoutes: React.FC = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/graph" element={<GraphApp />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/" element={<GraphApp />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="*" element={<NotFoundPage />} /> {/* Catch-all for 404 */}
             </Routes>

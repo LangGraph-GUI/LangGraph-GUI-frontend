@@ -1,7 +1,7 @@
 // App.tsx
 
 import React from 'react';
-import AppRoutes from './src/routes';
+import AppRoutes from './routes';
 
 const App: React.FC = () => {
     return (

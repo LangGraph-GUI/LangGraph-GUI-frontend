@@ -23,3 +23,13 @@ hold
 ```
 npm run dev
 ```
+
+
+
+## Debug Redux
+
+in browser, F12 and type 
+
+```
+window.store.getState().subGraphs
+```
