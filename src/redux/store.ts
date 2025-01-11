@@ -1,7 +1,7 @@
 // redux/store.ts
 
 import { configureStore, } from '@reduxjs/toolkit';
-import subGraphReducer from './slices/subGraphSlice';
+import subGraphReducer from '../Graph/subGraphSlice.store';
 
 export const store = configureStore(
     {
