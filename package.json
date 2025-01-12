@@ -3,10 +3,12 @@
   "version": "0.6.0",
   "private": true,
   "dependencies": {
+    "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.5.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@xyflow/react": "^12.3.6",
     "marked": "^14.1.0",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
@@ -14,7 +16,6 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
-    "reactflow": "^11.11.4",
     "uuid": "^10.0.0",
     "web-vitals": "^2.1.4"
   },
