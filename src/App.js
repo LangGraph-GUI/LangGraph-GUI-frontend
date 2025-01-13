@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
 
-import { GraphManagerProvider } from './Graph/GraphManager';
+import { GraphContextProvider } from './Graph/GraphContext';
 import ConfigManager from './ConfigManager';
 import AppRouter from './Router';
 
@@ -42,13 +42,13 @@ function App() {
   return (
     <Provider store={store}>
       <Router basename="/">
-        <GraphManagerProvider>
+        <GraphContextProvider>
           <div className="App">
             <ConditionalStrictMode>
               <AppRouter />
             </ConditionalStrictMode>
           </div>
-        </GraphManagerProvider>
+        </GraphContextProvider>
       </Router>
     </Provider>
   );
