@@ -1,13 +1,11 @@
 // redux/store.ts
 
 import { configureStore, } from '@reduxjs/toolkit';
-import subGraphReducer from '../Graph/subGraphs.store';
 import userInfoReducer from './userInfo.store';
 
 export const store = configureStore(
     {
         reducer: {
-            subGraphs: subGraphReducer,
             userInfo: userInfoReducer,
         },
     },

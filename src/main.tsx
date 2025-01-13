@@ -8,14 +8,17 @@ import App from './App.tsx'
 import { Provider } from 'react-redux';
 import {store} from "./redux/store.ts"
 import { ReactFlowProvider } from '@xyflow/react';
+import { GraphProvider } from './Graph/GraphContext';
 
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>
-            <ReactFlowProvider>
-                <App />
-            </ReactFlowProvider>
+            <GraphProvider>
+                <ReactFlowProvider>
+                    <App />
+                </ReactFlowProvider>
+            </GraphProvider>
         </Provider>
     </StrictMode>,
 )
