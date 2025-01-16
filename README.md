@@ -16,7 +16,7 @@ tsc -p tsconfig.app.json
 
 lint
 ```
-npx eslint .
+npx eslint --fix .
 ```
 
 hold
