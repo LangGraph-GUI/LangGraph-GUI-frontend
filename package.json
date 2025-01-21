@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "NODE_ENV=DEBUG vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint --fix .",
     "preview": "vite preview",
-    "typecheck": "tsc -p tsconfig.app.json",
+    "tsc": "tsc -p tsconfig.app.json",
     "test": "vitest"
   },
   "dependencies": {
