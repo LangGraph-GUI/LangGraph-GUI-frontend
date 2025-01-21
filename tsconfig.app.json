@@ -24,7 +24,6 @@
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true
   },
-  "include": ["./**/*.ts", "./**/*.tsx"],
+  "include": ["src", "__tests__"],
   "exclude": ["node_modules"]
-
 }
