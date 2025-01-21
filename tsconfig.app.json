@@ -24,6 +24,6 @@
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true
   },
-  "include": ["src", "__tests__"],
+  "include": ["src", "setupTests.ts"],
   "exclude": ["node_modules"]
 }
