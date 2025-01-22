@@ -13,7 +13,7 @@ export const saveJsonToFile = (JsonData: any): void => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        alert('File saved!');
+        alert('File saving!');
     } catch (error) {
         console.error('Error saving JSON:', error);
         alert('Failed to save file.');
