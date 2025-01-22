@@ -1,6 +1,6 @@
 // utils/JsonIO.ts
 
-export const saveJsonToFile = (JsonData: any): void => {
+export const saveJsonToFile = (filename: string, JsonData: any): void => {
     try {
         const blob = new Blob([JSON.stringify(JsonData, null, 2)], {
             type: 'application/json',
@@ -8,7 +8,7 @@ export const saveJsonToFile = (JsonData: any): void => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'Save.json';
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -19,7 +19,7 @@ export const saveJsonToFile = (JsonData: any): void => {
         alert('Failed to save file.');
     }
 };
-  
+
 export const loadJsonFromFile = (): Promise<any> => {
     return new Promise((resolve, reject) => {
         const fileInput = document.createElement('input');
@@ -27,7 +27,7 @@ export const loadJsonFromFile = (): Promise<any> => {
         fileInput.accept = '.json';
         fileInput.style.display = 'none';
         document.body.appendChild(fileInput);
-  
+
         fileInput.addEventListener('change', async (event) => {
             try {
                 const file = (event.target as HTMLInputElement).files?.[0];
@@ -45,7 +45,7 @@ export const loadJsonFromFile = (): Promise<any> => {
                         } else {
                             reject(new Error('File contents are not a string.'));
                         }
-  
+
                     } catch (error) {
                         reject(new Error('Error parsing JSON.' + error));
                     }
