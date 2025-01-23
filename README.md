@@ -2,6 +2,7 @@
 
 TODO list: 
 * porting ```src/Graph``` to ts
+  * finally, to fix edge
 * hold at ```yourdomain.com```
 
 
@@ -13,17 +14,5 @@ TODO list:
   * ```npm run lint```
 * hold
   * ```npm run dev```
-
-
-## Debug Redux
-
-at ```package.json```
-```
-"dev": "NODE_ENV=DEBUG vite",
-```
-
-in browser, F12 and type 
-
-```
-window.store
-```
+* vitest
+  * ```npm run test```
