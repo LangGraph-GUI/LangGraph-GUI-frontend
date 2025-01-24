@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import GraphApp from '../Graph/GraphApp';
-
+import MainLayout from '../components/MainLayout';
 
 // Example Components
 const HomePage = () => <h1>Home Page</h1>;
@@ -15,9 +15,12 @@ const AppRoutes: React.FC = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/" element={<GraphApp />} />
+                
+                <Route element={<MainLayout />}>
+                    <Route path="/" element={<GraphApp />} />                    
+                </Route>
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/test" element={<HomePage />} />
                 <Route path="*" element={<NotFoundPage />} /> {/* Catch-all for 404 */}
             </Routes>
         </BrowserRouter>
