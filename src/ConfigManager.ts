@@ -1,23 +1,22 @@
 // ConfigManager.ts
 
 interface ConfigSettings {
-    username?: string | undefined; // Explicitly allow undefined
+    username: string;
     llmModel: string;
     apiKey: string;
 }
 
 class ConfigManager {
     private static instance: ConfigManager;
-    private llmModel: string = 'gpt'; // Provide default values
-    private apiKey: string = '<empty>'; // Provide default values
-    private username?: string; // Optional because it's fetched asynchronously
+    private llmModel: string = 'gpt'; 
+    private apiKey: string = '<empty>'; 
+    private username: string = 'unknown';
 
     constructor() {
         if (ConfigManager.instance) {
             return ConfigManager.instance;
         }
-
-        // If the local storage has data use it, otherwise set to a default.
+       
         const storedLlmModel = localStorage.getItem('llmModel');
         if(storedLlmModel) {
             this.llmModel = storedLlmModel;
@@ -27,7 +26,7 @@ class ConfigManager {
         if(storedApiKey) {
             this.apiKey = storedApiKey;
         }
-        
+
         this.fetchUsername(); // Initiate username fetch
 
         ConfigManager.instance = this;

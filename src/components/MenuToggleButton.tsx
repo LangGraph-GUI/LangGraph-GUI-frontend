@@ -20,15 +20,15 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow }) =>
         // Handle run logic here (open the RunWindow)
     };
 
-    const isUsernameValid = username && username.length > 0;
+    const UsernameValid = username === 'unknown';
 
 
     return (
         <div className='mt-4 flex flex-col gap-2'>
             <div
-                className={`font-bold ${isUsernameValid ? 'text-green-500' : 'text-red-500'}`}
+                className={`font-bold ${!UsernameValid ? 'text-green-500' : 'text-red-500'}`}
             >
-                {isUsernameValid ? `User: ${username}` : 'User: undefined'}
+                {`User: ${username}`}
             </div>
 
             <input
