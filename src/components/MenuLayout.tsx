@@ -50,7 +50,7 @@ const MenuLayout: React.FC = () => {
                     <Outlet />
                 </div>
             </div>
-             {isRunWindowOpen && <RunWindow onClose={closeRunWindow} />}
+            {isRunWindowOpen && <RunWindow onClose={closeRunWindow} />}
         </div>
     );
 };
