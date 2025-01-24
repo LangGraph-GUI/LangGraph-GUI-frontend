@@ -1,12 +1,16 @@
 // components/MenuToggleButton.tsx
 
-import React, { useState } from 'react';
-import RunWindow from './RunWindow';
+import React from 'react';
 import ConfigManager from '../ConfigManager';
 
-const MenuToggleButton: React.FC = () => {
-    const [isRunWindowOpen, setIsRunWindowOpen] = useState(false);
+interface MenuToggleButtonProps {
+    openRunWindow: () => void;
+}
+
+const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow }) => {
     const { username } = ConfigManager.getSettings();
+
+
 
     const handleUploadClick = () => {
         console.log('upload file');
@@ -25,13 +29,11 @@ const MenuToggleButton: React.FC = () => {
 
     const handleRunClick = () => {
         console.log('run');
-        setIsRunWindowOpen(true);
+        openRunWindow();
         // Handle run logic here (open the RunWindow)
     };
 
-    const closeRunWindow = () => {
-        setIsRunWindowOpen(false);
-    };
+
 
     // Check if username is valid
     const isUsernameValid = username && username.length > 0;
@@ -56,9 +58,8 @@ const MenuToggleButton: React.FC = () => {
                 Clean Server Cache
             </button>
             <button onClick={handleRunClick} className="bg-purple-500 hover:bg-purple-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
-                Run
+                To Run Graph
             </button>
-            {isRunWindowOpen && <RunWindow onClose={closeRunWindow} />}
         </div>
     );
 };

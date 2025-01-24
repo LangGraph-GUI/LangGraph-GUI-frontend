@@ -156,7 +156,7 @@ function RunWindow({ onClose }: RunWindowProps) {
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-1000">
             <div className="bg-white p-5 rounded shadow-md w-4/5 h-4/5 flex flex-col">
                 <h2 className="text-lg font-bold mb-4">Run Script</h2>
-                <div className="flex mb-4">
+                <div className="flex mb-4 justify-end"> {/* Changed here */}
                     <button
                         className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 ${isRunning ? 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed' : ''}`}
                         onClick={handleRun}
