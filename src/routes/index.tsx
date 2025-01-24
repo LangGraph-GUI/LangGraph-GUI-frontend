@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import GraphApp from '../Graph/GraphApp';
-import MainLayout from '../components/MainLayout';
+import MenuLayout from '../components/MenuLayout';
 
 // Example Components
 const HomePage = () => <h1>Home Page</h1>;
@@ -16,7 +16,7 @@ const AppRoutes: React.FC = () => {
         <BrowserRouter>
             <Routes>
                 
-                <Route element={<MainLayout />}>
+                <Route element={<MenuLayout />}>
                     <Route path="/" element={<GraphApp />} />                    
                 </Route>
                 <Route path="/about" element={<AboutPage />} />
