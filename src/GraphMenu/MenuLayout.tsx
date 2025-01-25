@@ -1,4 +1,4 @@
-// components/MenuLayout.tsx
+// GraphMenu/MenuLayout.tsx
 
 import React, { useState, useRef } from "react";
 import { Outlet } from 'react-router-dom';

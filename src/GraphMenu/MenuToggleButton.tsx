@@ -1,4 +1,4 @@
-// components/MenuToggleButton.tsx
+// GraphMenu/MenuToggleButton.tsx
 
 import React, { useRef } from 'react';
 import ConfigManager from '../ConfigManager';

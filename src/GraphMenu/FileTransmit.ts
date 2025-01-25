@@ -1,4 +1,4 @@
-// components/FileTransmit.ts
+// GraphMenu/FileTransmit.ts
 
 import SERVER_URL from '../config';
 import ConfigManager from '../ConfigManager';

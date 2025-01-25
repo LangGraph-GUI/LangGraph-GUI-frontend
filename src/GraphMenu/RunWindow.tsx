@@ -1,4 +1,4 @@
-// components/RunWindow.tsx
+// GraphMenu/RunWindow.tsx
 
 import { useState, useEffect, useRef } from 'react';
 import SERVER_URL from '../config';

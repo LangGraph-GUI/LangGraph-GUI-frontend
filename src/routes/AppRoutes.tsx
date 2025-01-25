@@ -1,10 +1,10 @@
-// routes/index.tsx
+// routes/AppRoutes.tsx
 
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import GraphApp from '../Graph/GraphApp';
-import MenuLayout from '../components/MenuLayout';
+import MenuLayout from '../GraphMenu/MenuLayout';
 
 // Example Components
 const HomePage = () => <h1>Home Page</h1>;
