@@ -7,9 +7,10 @@ import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit';
 
 interface MenuToggleButtonProps {
     openRunWindow: () => void;
+    openConfigWindow: () => void; // Add this prop
 }
 
-const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow }) => {
+const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, openConfigWindow }) => { // Update destructuring
     const { username } = ConfigManager.getSettings();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -19,6 +20,10 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow }) =>
         openRunWindow();
         // Handle run logic here (open the RunWindow)
     };
+
+    const handleConfigClick = () => {
+        openConfigWindow();
+    }
 
     const UsernameValid = username === 'unknown';
 
@@ -44,6 +49,9 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow }) =>
 
                 }}
             />
+            <button onClick={handleRunClick} className="bg-purple-500 hover:bg-purple-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
+                To Run Graph
+            </button>
             <button onClick={() => {
                 if (fileInputRef.current) {
                     fileInputRef.current.click();
@@ -62,9 +70,10 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow }) =>
             }} className="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
                 Clean Server Cache
             </button>
-            <button onClick={handleRunClick} className="bg-purple-500 hover:bg-purple-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
-                To Run Graph
+            <button onClick={handleConfigClick} className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
+                 Settings
             </button>
+
         </div>
     );
 };

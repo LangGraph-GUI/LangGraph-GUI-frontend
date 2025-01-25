@@ -1,13 +1,15 @@
 // GraphMenu/MenuLayout.tsx
-
 import React, { useState, useRef } from "react";
 import { Outlet } from 'react-router-dom';
 import MenuToggleButton from './MenuToggleButton';
 import RunWindow from './RunWindow';
+import ConfigWindow from './ConfigWindow'; // Import ConfigWindow
+
 
 const MenuLayout: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isRunWindowOpen, setIsRunWindowOpen] = useState(false);
+    const [isConfigWindowOpen, setIsConfigWindowOpen] = useState(false); // Config window state
     const menuRef = useRef<HTMLDivElement>(null);
 
     const toggleMenu = () => {
@@ -19,12 +21,17 @@ const MenuLayout: React.FC = () => {
     const openRunWindow = () => {
         setIsRunWindowOpen(true);
     };
-
     const closeRunWindow = () => {
         setIsRunWindowOpen(false);
     };
 
+    const openConfigWindow = () => { // Open config window
+        setIsConfigWindowOpen(true);
+    };
 
+    const closeConfigWindow = () => {  // Close config window
+        setIsConfigWindowOpen(false);
+    };
 
     return (
         <div className="relative min-h-screen overflow-x-hidden overflow-y-auto flex">
@@ -37,7 +44,7 @@ const MenuLayout: React.FC = () => {
                         <span style={{ fontSize: '2em' }}>«</span>
                     </button>
                     <div className='pt-20'>
-                        <MenuToggleButton openRunWindow={openRunWindow}/>
+                        <MenuToggleButton openRunWindow={openRunWindow} openConfigWindow={openConfigWindow}/>  {/* Pass openConfigWindow */}
                     </div>
                 </div>
             </div>
@@ -51,6 +58,7 @@ const MenuLayout: React.FC = () => {
                 </div>
             </div>
             {isRunWindowOpen && <RunWindow onClose={closeRunWindow} />}
+            {isConfigWindowOpen && <ConfigWindow onClose={closeConfigWindow} />}   {/* Render ConfigWindow */}
         </div>
     );
 };
