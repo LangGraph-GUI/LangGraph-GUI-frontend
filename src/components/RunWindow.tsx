@@ -19,37 +19,50 @@ function RunWindow({ onClose }: RunWindowProps) {
     const isPollingRef = useRef(false);
 
 
-
-    const saveGraphData = async () => {
+    const uploadGraphData = async () => {
         try {
             const flowData = allSubGraphsToJson(subGraphs);
+
             if (!username) {
-                throw new Error("Username not available to save graph data.");
+                throw new Error("Username not available to upload graph data.");
             }
-            const response = await fetch(`${SERVER_URL}/save-graph/${encodeURIComponent(username)}`, {
+
+            const jsonString = JSON.stringify(flowData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const graphFile = new File([blob], 'graph.json');
+
+
+            const formData = new FormData();
+            formData.append('files', graphFile);
+
+
+            const response = await fetch(`${SERVER_URL}/upload/${encodeURIComponent(username)}`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(flowData),
+                body: formData,
             });
 
 
             if (!response.ok) {
-                throw new Error('Failed to save graph data on the server.');
+                const errorData = await response.json();
+                throw new Error('Failed to upload graph data: ' + errorData.error);
             }
 
 
-            console.log('Graph data successfully saved to server.\n');
-            setResponseMessage(prev => prev + '\nGraph data successfully saved to server.\n');
+            console.log('Graph data successfully uploaded to server.\n');
+            setResponseMessage(prev => prev + '\nGraph data successfully uploaded to server.\n');
+
+
         } catch (error: unknown) {
             let errorMessage = "An unknown error occurred";
             if (error instanceof Error) {
                 errorMessage = error.message;
             }
-            console.error('Error saving graph data:', errorMessage);
-            setResponseMessage(prev => prev + '\nError saving graph data: ' + errorMessage);
+            console.error('Error uploading graph data:', errorMessage);
+            setResponseMessage(prev => prev + '\nError uploading graph data: ' + errorMessage);
             throw error;
         }
     };
+
 
 
     const handleRun = async () => {
@@ -59,7 +72,7 @@ function RunWindow({ onClose }: RunWindowProps) {
 
 
         try {
-            await saveGraphData();
+            await uploadGraphData();
             console.log("Attempting to send request to Flask server...");
 
             if (!username) {
