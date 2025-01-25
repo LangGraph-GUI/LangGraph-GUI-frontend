@@ -7,13 +7,12 @@ import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit';
 
 interface MenuToggleButtonProps {
     openRunWindow: () => void;
-    openConfigWindow: () => void; // Add this prop
+    openConfigWindow: () => void;
 }
 
-const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, openConfigWindow }) => { // Update destructuring
+const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, openConfigWindow }) => {
     const { username } = ConfigManager.getSettings();
     const fileInputRef = useRef<HTMLInputElement>(null);
-
 
     const handleRunClick = () => {
         console.log('run');
@@ -24,6 +23,11 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, open
     const handleConfigClick = () => {
         openConfigWindow();
     }
+
+    const handleDocumentationClick = () => {
+        window.open("https://langgraph-gui.github.io/", "_blank");
+    };
+
 
     const UsernameValid = username === 'unknown';
 
@@ -43,8 +47,8 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, open
                 ref={fileInputRef}
                 onChange={async (e) => {
                     await handleUpload(e.target.files);
-                    if(fileInputRef.current){
-                        fileInputRef.current.value = ''
+                    if (fileInputRef.current) {
+                        fileInputRef.current.value = '';
                     }
 
                 }}
@@ -73,7 +77,9 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, open
             <button onClick={handleConfigClick} className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
                  Settings
             </button>
-
+            <button onClick={handleDocumentationClick} className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
+                Documentation
+            </button>
         </div>
     );
 };
