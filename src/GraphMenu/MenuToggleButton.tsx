@@ -66,12 +66,12 @@ const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, open
             </button>
             <button onClick={async () => {
                 await handleDownload();
-            }} className="bg-green-500 hover:bg-green-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
+            }} className="bg-blue-500 hover:bg-green-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
                 Get Files from Server
             </button>
             <button onClick={async () => {
                 await handleCleanCache();
-            }} className="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
+            }} className="bg-blue-500 hover:bg-yellow-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
                 Clean Server Cache
             </button>
             <button onClick={handleConfigClick} className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-1 rounded focus:outline-none focus:shadow-outline text-sm">
