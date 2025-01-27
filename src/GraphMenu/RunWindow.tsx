@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import SERVER_URL from '../config';
 import { useGraph } from '../Graph/GraphContext';
 import { allSubGraphsToJson } from '../Graph/JsonUtil';
-import ConfigManager from '../ConfigManager';
+import ConfigManager from '../utils/ConfigManager';
 
 interface RunWindowProps {
     onClose: () => void;

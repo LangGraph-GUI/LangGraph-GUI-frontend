@@ -1,7 +1,7 @@
 // GraphMenu/ConfigWindow.tsx
 
 import { useState } from 'react';
-import ConfigManager from '../ConfigManager';
+import ConfigManager from '../utils/ConfigManager';
 
 interface ConfigWindowProps {
     onClose: () => void;

@@ -1,7 +1,7 @@
 // GraphMenu/MenuToggleButton.tsx
 
 import React, { useRef } from 'react';
-import ConfigManager from '../ConfigManager';
+import ConfigManager from '../utils/ConfigManager';
 import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit';
 
 
