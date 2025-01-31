@@ -23,7 +23,9 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      'indent': ['error', 4], // added this line to enforce 4 space indent
+      'indent': ['error', 4],
+      // Disable the no-explicit-any rule
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 )
