@@ -2,12 +2,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-type BackendUrlMode = 'development' | 'preview' | 'production';
+type BackendUrlMode = 'development' | 'production';
 
 const backendUrls: Record<BackendUrlMode, string> = {
     development: 'http://localhost:5000',     // Docker Compose
-    preview: 'http://backend.local',        // K8s preview
-    production: 'https://your-prod-backend.com'
+    production: 'http://backend.local'        // K8s preview
 };
 
 export default defineConfig(({ mode }) => {
@@ -17,10 +16,10 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [react()],
         server: {
-            host: '0.0.0.0', 
+            host: '0.0.0.0',
             port: 3000,
             allowedHosts: [
-                'localhost', 
+                'localhost',
                 '127.0.0.1',
                 'frontend.local',
             ],
