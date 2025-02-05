@@ -1,9 +1,6 @@
 # reactflow-ts
 
-
-
-## Run
-
+## Dev 
 * compile
   * ```npm run tsc```
 * lint
@@ -13,7 +10,8 @@
 * vitest
   * ```npm run test```
 
-
-### TODO list: 
-
-* hold at ```yourdomain.com```
+## Serve
+``` bash
+RUN npm run build
+run npm preview
+```

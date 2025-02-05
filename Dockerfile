@@ -1,4 +1,3 @@
-# LangGraph-GUI/Dockerfile
 FROM node:20
 
 # Create and set the working directory
@@ -10,8 +9,10 @@ COPY . .
 # Install dependencies
 RUN npm install
 
+RUN npm run build
+
 # Expose the port the app runs on
-# EXPOSE 3000
+EXPOSE 3000
 
 # Start the application
-#CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
