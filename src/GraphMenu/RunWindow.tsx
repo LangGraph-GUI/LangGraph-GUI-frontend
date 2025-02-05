@@ -1,7 +1,6 @@
 // GraphMenu/RunWindow.tsx
 
 import { useState, useEffect, useRef } from 'react';
-import SERVER_URL from '../config';
 import { useGraph } from '../Graph/GraphContext';
 import { allSubGraphsToJson } from '../Graph/JsonUtil';
 import ConfigManager from '../utils/ConfigManager';
@@ -18,6 +17,7 @@ function RunWindow({ onClose }: RunWindowProps) {
     const { subGraphs } = useGraph();
     const isPollingRef = useRef(false);
 
+    const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
     const uploadGraphData = async () => {
         try {

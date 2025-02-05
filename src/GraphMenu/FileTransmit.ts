@@ -1,10 +1,11 @@
 // GraphMenu/FileTransmit.ts
 
-import SERVER_URL from '../config';
 import ConfigManager from '../utils/ConfigManager';
 
 export const handleUpload = async (files: FileList | null) => {
     const { username } = ConfigManager.getSettings();
+
+    const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
     if (!files || files.length === 0) {
         alert("No files selected for upload.");
@@ -43,6 +44,9 @@ export const handleUpload = async (files: FileList | null) => {
 export const handleDownload = async () => {
     const { username } = ConfigManager.getSettings();
 
+    const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
+
+
     if (!username) {
         alert("Username is not set. Please configure your settings.");
         return;
@@ -69,6 +73,10 @@ export const handleDownload = async () => {
 
 
 export const handleCleanCache = async () => {
+
+    const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
+
+
     const { username } = ConfigManager.getSettings();
     if (!username) {
         alert("Username is not set. Please configure your settings.");
