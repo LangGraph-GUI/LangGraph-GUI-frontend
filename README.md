@@ -12,6 +12,6 @@
 
 ## Serve
 ``` bash
-RUN npm run build
-run npm preview
+npm run build
+npm run preview -- --host 0.0.0.0 --port 3000
 ```
