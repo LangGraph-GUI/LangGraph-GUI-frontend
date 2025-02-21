@@ -111,7 +111,7 @@ function RunWindow({ onClose }: RunWindowProps) {
                             setIsRunning(false)
                         }
                     }catch(e){
-
+                        console.error("Error parsing JSON:", e);
                     }
                     setResponseMessage(prev => prev + chunk);
                 }
@@ -157,7 +157,7 @@ function RunWindow({ onClose }: RunWindowProps) {
             isPollingRef.current = false;
             clearInterval(interval);
         };
-    }, [username]);
+    }, [username, SERVER_URL]);
 
 
     const handleLeave = async () => {
