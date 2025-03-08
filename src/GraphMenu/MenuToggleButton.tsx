@@ -1,7 +1,8 @@
 // GraphMenu/MenuToggleButton.tsx
 
 import React, { useRef } from 'react';
-import ConfigManager from '../utils/ConfigManager';
+import { useAppSelector } from '../redux/hooks'; // Import the custom hook
+import { RootState } from '../redux/store'; // Import RootState
 import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit';
 
 
@@ -11,7 +12,8 @@ interface MenuToggleButtonProps {
 }
 
 const MenuToggleButton: React.FC<MenuToggleButtonProps> = ({ openRunWindow, openConfigWindow }) => {
-    const { username } = ConfigManager.getSettings();
+    // Use the Redux store to get the username
+    const username = useAppSelector((state: RootState) => state.userInfo.username);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleRunClick = () => {

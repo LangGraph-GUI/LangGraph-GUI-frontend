@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useGraph } from '../Graph/GraphContext';
 import { allSubGraphsToJson } from '../Graph/JsonUtil';
-import ConfigManager from '../utils/ConfigManager';
+import { useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
 
 interface RunWindowProps {
     onClose: () => void;
@@ -13,7 +14,12 @@ interface RunWindowProps {
 function RunWindow({ onClose }: RunWindowProps) {
     const [responseMessage, setResponseMessage] = useState('');
     const [isRunning, setIsRunning] = useState(false);
-    const { username, llmModel, apiKey } = ConfigManager.getSettings();
+
+    // Use Redux to get the config settings
+    const username = useAppSelector((state: RootState) => state.userInfo.username);
+    const llmModel = useAppSelector((state: RootState) => state.userInfo.llmModel);
+    const apiKey = useAppSelector((state: RootState) => state.userInfo.apiKey);
+
     const { subGraphs } = useGraph();
     const isPollingRef = useRef(false);
 
@@ -23,7 +29,7 @@ function RunWindow({ onClose }: RunWindowProps) {
         try {
             const flowData = allSubGraphsToJson(subGraphs);
 
-            if (!username) {
+            if (username === 'unknown') {
                 throw new Error("Username not available to upload graph data.");
             }
 
@@ -75,7 +81,7 @@ function RunWindow({ onClose }: RunWindowProps) {
             await uploadGraphData();
             console.log("Attempting to send request to Flask server...");
 
-            if (!username) {
+            if (username === 'unknown') {
                 throw new Error("Username not available to run.");
             }
 
@@ -137,7 +143,7 @@ function RunWindow({ onClose }: RunWindowProps) {
         isPollingRef.current = true;
         const checkStatus = async () => {
             try {
-                if (!username) {
+                if (username === 'unknown') {
                     throw new Error("Username not available to check status.");
                 }
 

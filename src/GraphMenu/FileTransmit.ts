@@ -1,9 +1,11 @@
 // GraphMenu/FileTransmit.ts
 
-import ConfigManager from '../utils/ConfigManager';
+import { useAppSelector } from '../redux/hooks'; // Assuming you have a custom hook
+import { RootState } from '../redux/store'; // Import RootState
 
 export const handleUpload = async (files: FileList | null) => {
-    const { username } = ConfigManager.getSettings();
+    // Use the Redux store to get the username
+    const username = useAppSelector((state: RootState) => state.userInfo.username);
 
     const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -11,8 +13,8 @@ export const handleUpload = async (files: FileList | null) => {
         alert("No files selected for upload.");
         return;
     }
-   
-    if (!username) {
+
+    if (username === 'unknown') {
         alert("Username is not set. Please configure your settings.");
         return;
     }
@@ -42,12 +44,13 @@ export const handleUpload = async (files: FileList | null) => {
 
 
 export const handleDownload = async () => {
-    const { username } = ConfigManager.getSettings();
+    // Use the Redux store to get the username
+    const username = useAppSelector((state: RootState) => state.userInfo.username);
 
     const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
 
-    if (!username) {
+    if (username === 'unknown') {
         alert("Username is not set. Please configure your settings.");
         return;
     }
@@ -76,9 +79,10 @@ export const handleCleanCache = async () => {
 
     const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
+    // Use the Redux store to get the username
+    const username = useAppSelector((state: RootState) => state.userInfo.username);
 
-    const { username } = ConfigManager.getSettings();
-    if (!username) {
+    if (username === 'unknown') {
         alert("Username is not set. Please configure your settings.");
         return;
     }

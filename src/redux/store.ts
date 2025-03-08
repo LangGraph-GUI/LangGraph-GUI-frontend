@@ -1,7 +1,7 @@
 // redux/store.ts
 
 import { configureStore, } from '@reduxjs/toolkit';
-import userInfoReducer from './userInfo.store';
+import userInfoReducer from './slices/userInfo.slice';
 
 export const store = configureStore(
     {

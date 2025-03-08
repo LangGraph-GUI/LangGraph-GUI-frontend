@@ -1,21 +1,29 @@
 // GraphMenu/ConfigWindow.tsx
 
 import { useState } from 'react';
-import ConfigManager from '../utils/ConfigManager';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setConfigs } from '../redux/slices/userInfo.slice';
 
 interface ConfigWindowProps {
     onClose: () => void;
 }
 
 function ConfigWindow({ onClose }: ConfigWindowProps) {
-    const settings = ConfigManager.getSettings();
+    const username = useSelector((state: RootState) => state.userInfo.username);
+    const llmModelFromRedux = useSelector((state: RootState) => state.userInfo.llmModel);
+    const apiKeyFromRedux = useSelector((state: RootState) => state.userInfo.apiKey);
 
-    const [username] = useState(settings.username);
-    const [llmModel, setLlmModel] = useState(settings.llmModel);
-    const [apiKey, setAPIKey] = useState(settings.apiKey);
+    const [llmModel, setLlmModel] = useState(llmModelFromRedux);
+    const [apiKey, setAPIKey] = useState(apiKeyFromRedux);
+
+    const dispatch = useDispatch();
 
     const handleSave = () => {
-        ConfigManager.setSettings(llmModel, apiKey);
+        dispatch(setConfigs({ llmModel: llmModel, apiKey: apiKey }));
+        localStorage.setItem('llmModel', llmModel);
+        localStorage.setItem('apiKey', apiKey);
+
         onClose();
     };
 
@@ -25,7 +33,7 @@ function ConfigWindow({ onClose }: ConfigWindowProps) {
                 <h2 className="text-lg font-bold mb-4 text-black">Settings</h2>
                 <div className="mb-2">
                     <label className="block mb-1 text-sm text-black">
-                    Username:
+                        Username:
                         <input
                             type="text"
                             value={username}
@@ -36,7 +44,7 @@ function ConfigWindow({ onClose }: ConfigWindowProps) {
                 </div>
                 <div className="mb-2">
                     <label className="block mb-1 text-sm text-black">
-                    LLM model:
+                        LLM model:
                         <input
                             type="text"
                             value={llmModel}
@@ -47,7 +55,7 @@ function ConfigWindow({ onClose }: ConfigWindowProps) {
                 </div>
                 <div className="mb-2">
                     <label className="block mb-1 text-sm text-black">
-                    API Key:
+                        API Key:
                         <input
                             type="text"
                             value={apiKey}
@@ -61,13 +69,13 @@ function ConfigWindow({ onClose }: ConfigWindowProps) {
                         onClick={handleSave}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
                     >
-                    Save
+                        Save
                     </button>
                     <button
                         onClick={onClose}
                         className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
                     >
-                    Cancel
+                        Cancel
                     </button>
                 </div>
             </div>
