@@ -1,5 +1,5 @@
 {
-	"name": "langgraph-gui-frontend",
+	"name": "langgraph-gui-svelte",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -43,6 +43,6 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
-		"@xyflow/svelte": "^0.1.37"
+		"@xyflow/svelte": "^1.0.2"
 	}
 }

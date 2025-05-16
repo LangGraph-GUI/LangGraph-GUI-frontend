@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
 	optimizeDeps: {
-		exclude: ['clsx', '@xyflow/system', 'classcat'],
+		exclude: ['clsx', '@xyflow/system', 'classcat']
 	},
 	server: {
 		host: '0.0.0.0',

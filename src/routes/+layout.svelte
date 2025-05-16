@@ -1,43 +1,42 @@
 <!-- routes/+layout.svelte -->
 <script>
-  import '../app.css'; // Import global styles
-  import { setContext } from 'svelte';
-  import { writable } from 'svelte/store';
+	import '../app.css'; // Import global styles
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 
-  // Theme settings (using signals for reactivity)
-  const copyrightYear = new Date().getFullYear();
-  const projectName = 'LangGraph-GUI';
-  const copyrightOwner = 'HomunMage';
-  const theme = writable({
-    primaryColor: 'bg-gray-100',
-    textColor: 'text-gray-600',
-    borderColor: 'border-gray-300',
-    linkColor: 'text-blue-500 hover:text-blue-700',
-  });
+	// Theme settings (using signals for reactivity)
+	const copyrightYear = new Date().getFullYear();
+	const projectName = 'LangGraph-GUI';
+	const copyrightOwner = 'HomunMage';
+	const theme = writable({
+		primaryColor: 'bg-gray-100',
+		textColor: 'text-gray-600',
+		borderColor: 'border-gray-300',
+		linkColor: 'text-blue-500 hover:text-blue-700'
+	});
 
-  setContext('theme', theme); // Provide theme to descendants
+	setContext('theme', theme); // Provide theme to descendants
 
-  // Canvas settings (if needed, adjust as necessary)
-  const canvasId = 'myCanvas';
-
-  let { children } = $props(); // Svelte 5 props
-
+	let { children } = $props(); // Svelte 5 props
 </script>
 
 <svelte:head>
-  <link rel="icon" href="https://langgraph-gui.github.io/index.webp" />
+	<link rel="icon" href="https://langgraph-gui.github.io/index.webp" />
 </svelte:head>
 
-<div class="flex flex-col min-h-screen">
-  <header class="{$theme.primaryColor} py-4 text-center {$theme.borderColor} border-b">
-    <h1 class="text-2xl font-semibold">{projectName}</h1>
-  </header>
+<div class="flex min-h-screen flex-col">
+	<header class="{$theme.primaryColor} py-4 text-center {$theme.borderColor} border-b">
+		<h1 class="text-2xl font-semibold">{projectName}</h1>
+	</header>
 
-  <main class="flex-grow">
-    {@render children()}
-  </main>
+	<main class="flex-grow">
+		{@render children()}
+	</main>
 
-  <footer class="{$theme.primaryColor} py-2 text-center {$theme.borderColor} border-t text-sm {$theme.textColor}">
-    © {copyrightYear} {copyrightOwner}
-  </footer>
+	<footer
+		class="{$theme.primaryColor} py-2 text-center {$theme.borderColor} border-t text-sm {$theme.textColor}"
+	>
+		© {copyrightYear}
+		{copyrightOwner}
+	</footer>
 </div>
