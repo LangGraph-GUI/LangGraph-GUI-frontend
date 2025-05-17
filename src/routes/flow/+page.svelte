@@ -1,41 +1,24 @@
+<!-- routes/flow/+page.svelte -->
 <script lang="ts">
-  import {
-    SvelteFlow,
-    Controls,
-    Background,
-    MiniMap,
-    type Node,
-    type Edge,
-  } from "@xyflow/svelte";
+	import { SvelteFlow, Controls, Background, MiniMap } from '@xyflow/svelte';
+	import '@xyflow/svelte/dist/style.css';
 
-  import "@xyflow/svelte/dist/style.css";
+	// Import the stores
+	import { usingSubgraph, currentNodes, currentEdges } from './GraphStore.svelte';
 
-  let nodes = $state.raw<Node[]>([
-    {
-      id: "1",
-      data: { label: "Hello" },
-      position: { x: 0, y: 0 },
-    },
-    {
-      id: "2",
-      data: { label: "World" },
-      position: { x: 150, y: 150 },
-    },
-  ]);
-
-  let edges = $state.raw<Edge[]>([
-    {
-      id: "1-2",
-      source: "1",
-      target: "2",
-    },
-  ]);
+	// Toggle between subgraphs, e.g., on a button click
+	function switchTo(key: string) {
+		usingSubgraph.set(key);
+	}
 </script>
 
-<div style:height="100vh">
-  <SvelteFlow bind:nodes bind:edges fitView>
-    <Controls />
-    <Background />
-    <MiniMap />
-  </SvelteFlow>
+<div style="height: calc(100vh - 50px);">
+	<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} fitView>
+		<Controls />
+		<Background />
+		<MiniMap />
+	</SvelteFlow>
 </div>
+
+<button on:click={() => switchTo('default')}> Default Graph </button>
+<button on:click={() => switchTo('anotherKey')}> Another Graph </button>

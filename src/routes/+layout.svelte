@@ -25,18 +25,14 @@
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">
-	<header class="{$theme.primaryColor} py-4 text-center {$theme.borderColor} border-b">
-		<h1 class="text-2xl font-semibold">{projectName}</h1>
-	</header>
-
 	<main class="flex-grow">
 		{@render children()}
 	</main>
 
 	<footer
-		class="{$theme.primaryColor} py-2 text-center {$theme.borderColor} border-t text-sm {$theme.textColor}"
+		class="{$theme.primaryColor} py-0 text-center {$theme.borderColor} border-t text-sm {$theme.textColor}"
 	>
-		© {copyrightYear}
+		{projectName} © {copyrightYear}
 		{copyrightOwner}
 	</footer>
 </div>
