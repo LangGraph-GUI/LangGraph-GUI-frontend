@@ -1,18 +1,27 @@
-<!-- routes/graph/flow/GraphStore.svelte -->
+<!-- routes/graph/flow/graph-store.svelte -->
 <script lang="ts" context="module">
 	import { writable, derived, get } from 'svelte/store';
-	import type { Node, Edge } from '@xyflow/svelte';
+	import type { Edge } from '@xyflow/svelte';
 	import type { Writable } from 'svelte/store';
+	import type { FlowNode } from '$lib/graph/node-data'; // Import CustomNode
 
 	/** A graph consists of nodes and edges */
-	export type Graph = { nodes: Node[]; edges: Edge[] };
+	export type Graph = { nodes: FlowNode[]; edges: Edge[] };
 
 	/** Initial set of named subgraphs */
 	const initialGraphs: Record<string, Graph> = {
 		default: {
 			nodes: [
-				{ id: '1', data: { label: 'Hello' }, position: { x: 0, y: 0 } },
-				{ id: '2', data: { label: 'World' }, position: { x: 150, y: 150 } }
+				{
+					id: '1',
+					data: { label: 'Hello', name: 'Node 1', description: 'First node' },
+					position: { x: 0, y: 0 }
+				},
+				{
+					id: '2',
+					data: { label: 'World', name: 'Node 2', description: 'Second node' },
+					position: { x: 150, y: 150 }
+				}
 			],
 			edges: [{ id: '1-2', source: '1', target: '2' }]
 		}
