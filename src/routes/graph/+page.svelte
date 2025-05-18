@@ -4,6 +4,7 @@
 	import '@xyflow/svelte/dist/style.css';
 
 	import Sidebar from './menu/sidebar.svelte';
+	import GraphPanel from './flow/graph-panel.svelte';
 	import { currentNodes, currentEdges } from './flow/graph-store.svelte';
 
 	// Local state for sidebar visibility
@@ -20,6 +21,7 @@
 <Sidebar open={menuOpen} onToggle={toggleMenu} />
 
 <div class="content-wrapper" style="transform: translateX({contentOffset}px)">
+	<GraphPanel />
 	<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} fitView>
 		<Controls />
 		<Background />
