@@ -4,7 +4,6 @@
 	export let open: boolean;
 	export let onToggle: () => void;
 	import { usingSubgraph } from '../flow/graph-store.svelte'; // Import the store
-	import { saveGraph, loadGraph } from './json-io.svelte';
 </script>
 
 <div class="sidebar {open ? 'open' : ''}">
@@ -19,12 +18,6 @@
 			</li>
 			<li>
 				<button on:click={() => usingSubgraph.set('anotherKey')}>Another Graph</button>
-			</li>
-			<li>
-				<button on:click={saveGraph}>Save Graph</button>
-			</li>
-			<li>
-				<button on:click={loadGraph}>Load Graph</button>
 			</li>
 		</ul>
 	</nav>

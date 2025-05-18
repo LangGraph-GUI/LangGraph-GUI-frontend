@@ -1,13 +1,13 @@
 <!-- routes/graph/menu/json-io.svelte -->
 <script context="module" lang="ts">
 	import { get } from 'svelte/store';
-	import { graphs, usingSubgraph } from '../flow/graph-store.svelte';
-	import type { Graph } from '../flow/graph-store.svelte';
+	import { graphs, usingSubgraph } from './graph-store.svelte';
+	import type { Graph } from './graph-store.svelte';
 	import { saveJsonToFile, loadJsonFromFile } from '$lib/io/json';
-	import type { JsonNodeData } from '../flow/node-schema';
-	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from '../flow/node-schema';
+	import type { JsonNodeData } from './node-schema';
+	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from './node-schema';
 
-	export async function saveGraph(): Promise<void> {
+	export async function saveGraphs(): Promise<void> {
 		const gm = get(graphs);
 		const out = Object.entries(gm).map(([name, g], idx) => ({
 			name,
@@ -21,7 +21,7 @@
 	 * Load that same array back, rebuild your `graphs` store,
 	 * and switch to the first subgraph.
 	 */
-	export async function loadGraph(): Promise<void> {
+	export async function loadGraphs(): Promise<void> {
 		try {
 			const arr = (await loadJsonFromFile()) as Array<{
 				name: string;

@@ -1,7 +1,8 @@
 <!-- routes/graph/flow/graph-panel.svelte -->
 
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
+	import { saveGraphs, loadGraphs } from './json-io.svelte';
 
 	let isGraphMenuOpen = false;
 	let isSubGraphMenuOpen = false;
@@ -32,18 +33,18 @@
 		closeMenus();
 	};
 
-	const handleNewGraph = () => {
+	const handleNewGraphs = () => {
 		// Implement your logic here (currently does nothing)
 		closeMenus();
 	};
 
-	const handleLoadGraph = () => {
-		// Implement your logic here (currently does nothing)
+	const handleLoadGraphs = () => {
+		loadGraphs();
 		closeMenus();
 	};
 
-	const handleSaveGraph = () => {
-		// Implement your logic here (currently does nothing)
+	const handleSaveGraphs = () => {
+		saveGraphs();
 		closeMenus();
 	};
 
@@ -109,13 +110,14 @@
 		</button>
 		{#if isGraphMenuOpen}
 			<div class="dropdown-menu absolute left-0 z-10 mt-1">
-				<button class="block w-full px-4 py-2 text-left" on:click={handleNewGraph}>New Graph</button
+				<button class="block w-full px-4 py-2 text-left" on:click={handleNewGraphs}
+					>New Graphs</button
 				>
-				<button class="block w-full px-4 py-2 text-left" on:click={handleLoadGraph}
-					>Load Graph</button
+				<button class="block w-full px-4 py-2 text-left" on:click={handleLoadGraphs}
+					>Load Graphs</button
 				>
-				<button class="block w-full px-4 py-2 text-left" on:click={handleSaveGraph}
-					>Save Graph</button
+				<button class="block w-full px-4 py-2 text-left" on:click={handleSaveGraphs}
+					>Save Graphs</button
 				>
 			</div>
 		{/if}
