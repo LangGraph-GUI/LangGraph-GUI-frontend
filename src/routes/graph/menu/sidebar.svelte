@@ -4,6 +4,7 @@
 	export let open: boolean;
 	export let onToggle: () => void;
 	import { usingSubgraph } from '../flow/graph-store.svelte'; // Import the store
+	import { saveGraph, loadGraph } from './json-io.svelte';
 </script>
 
 <div class="sidebar {open ? 'open' : ''}">
@@ -14,10 +15,16 @@
 			<li><a href="#item2">Menu item 2</a></li>
 			<li><a href="#item3">Menu item 3</a></li>
 			<li>
-				<button on:click={() => usingSubgraph.set('default')}> Default Graph </button>
+				<button on:click={() => usingSubgraph.set('default')}>Default Graph</button>
 			</li>
 			<li>
-				<button on:click={() => usingSubgraph.set('anotherKey')}> Another Graph </button>
+				<button on:click={() => usingSubgraph.set('anotherKey')}>Another Graph</button>
+			</li>
+			<li>
+				<button on:click={saveGraph}>Save Graph</button>
+			</li>
+			<li>
+				<button on:click={loadGraph}>Load Graph</button>
 			</li>
 		</ul>
 	</nav>
@@ -58,5 +65,12 @@
 	}
 	nav li + li {
 		margin-top: 0.5rem;
+	}
+	button {
+		cursor: pointer; /* Makes the button appear clickable */
+		padding: 0.5rem 1rem; /* Adds some padding for better appearance */
+		border: 1px solid #ccc; /* Optional: Adds a border */
+		border-radius: 4px; /* Optional: Rounds the corners */
+		background-color: #f0f0f0; /* Optional:  A subtle background color */
 	}
 </style>
