@@ -14,12 +14,12 @@
 			nodes: [
 				{
 					id: '1',
-					data: { label: 'Hello', name: 'Node 1', description: 'First node' },
+					data: { label: 'Hello', name: 'Node 1' },
 					position: { x: 0, y: 0 }
 				},
 				{
 					id: '2',
-					data: { label: 'World', name: 'Node 2', description: 'Second node' },
+					data: { label: 'World', name: 'Node 2' },
 					position: { x: 150, y: 150 }
 				}
 			],
