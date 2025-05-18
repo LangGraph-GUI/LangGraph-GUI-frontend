@@ -4,8 +4,8 @@
 	import { graphs, usingSubgraph } from '../flow/graph-store.svelte';
 	import type { Graph } from '../flow/graph-store.svelte';
 	import { saveJsonToFile, loadJsonFromFile } from '$lib/io/json';
-	import type { JsonNodeData } from '$lib/graph/node-data';
-	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from '$lib/graph/node-data';
+	import type { JsonNodeData } from '../flow/node-schema';
+	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from '../flow/node-schema';
 
 	export async function saveGraph(): Promise<void> {
 		const gm = get(graphs);

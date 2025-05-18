@@ -3,7 +3,7 @@
 	import { writable, derived, get } from 'svelte/store';
 	import type { Edge } from '@xyflow/svelte';
 	import type { Writable } from 'svelte/store';
-	import type { FlowNode } from '$lib/graph/node-data'; // Import CustomNode
+	import type { FlowNode } from './node-schema'; // Import CustomNode
 
 	/** A graph consists of nodes and edges */
 	export type Graph = { nodes: FlowNode[]; edges: Edge[] };

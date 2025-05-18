@@ -176,21 +176,18 @@
 <style>
 	.dropdown-menu {
 		background-color: white;
-		border: 1px solid #ccc;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		border: 1px solid #e2e8f0;
+		border-radius: 0.25rem;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+		color: black;
 	}
 
 	.dropdown-menu button {
-		display: block;
-		padding: 8px 16px;
-		width: 100%;
-		text-align: left;
-		border: none;
-		background: none;
-		cursor: pointer;
+		color: black;
+		background-color: white;
 	}
 
 	.dropdown-menu button:hover {
-		background-color: #f0f0f0;
+		background-color: #f3f4f6;
 	}
 </style>
