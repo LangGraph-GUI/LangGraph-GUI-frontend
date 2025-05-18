@@ -1,9 +1,9 @@
-<!-- routes/flow/menu/sidebar.svelte -->
+<!-- routes/graph/menu/sidebar.svelte -->
 <script lang="ts">
 	// Receive the open state and a toggle callback from the parent
 	export let open: boolean;
 	export let onToggle: () => void;
-	import { usingSubgraph } from '../graph-store.svelte'; // Import the store
+	import { usingSubgraph } from '../flow/graph-store.svelte'; // Import the store
 </script>
 
 <div class="sidebar {open ? 'open' : ''}">

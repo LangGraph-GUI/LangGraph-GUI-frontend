@@ -1,10 +1,10 @@
-<!-- src/routes/flow/+page.svelte -->
+<!-- src/routes/graph/+page.svelte -->
 <script lang="ts">
 	import { SvelteFlow, Controls, Background, MiniMap } from '@xyflow/svelte';
 	import '@xyflow/svelte/dist/style.css';
 
 	import Sidebar from './menu/sidebar.svelte';
-	import { currentNodes, currentEdges } from './graph-store.svelte';
+	import { currentNodes, currentEdges } from './flow/graph-store.svelte';
 
 	// Local state for sidebar visibility
 	let menuOpen = false;
