@@ -4,7 +4,7 @@
 	import '@xyflow/svelte/dist/style.css';
 
 	import Sidebar from './menu/sidebar.svelte';
-	import { usingSubgraph, currentNodes, currentEdges } from './graph-store.svelte';
+	import { currentNodes, currentEdges } from './graph-store.svelte';
 
 	// Local state for sidebar visibility
 	let menuOpen = false;
@@ -26,9 +26,6 @@
 		<MiniMap />
 	</SvelteFlow>
 </div>
-
-<button on:click={() => usingSubgraph.set('default')}> Default Graph </button>
-<button on:click={() => usingSubgraph.set('anotherKey')}> Another Graph </button>
 
 <style>
 	.content-wrapper {
