@@ -2,6 +2,7 @@
 <script lang="ts" context="module">
 	import { writable, derived, get } from 'svelte/store';
 	import type { Node, Edge } from '@xyflow/svelte';
+	import type { Writable } from 'svelte/store';
 
 	/** A graph consists of nodes and edges */
 	export type Graph = { nodes: Node[]; edges: Edge[] };
@@ -27,11 +28,17 @@
 	 * Factory: produce a read/write store for one field
 	 * of the active subgraph object
 	 */
-	function makeCurrentStore<K extends keyof Graph>(field: K) {
+	function makeCurrentStore<K extends keyof Graph>(
+		field: K
+	): {
+		subscribe: Writable<Graph[K]>['subscribe'];
+		set: (value: Graph[K]) => void;
+		update: (updater: (value: Graph[K]) => Graph[K]) => void;
+	} {
 		// A derived store that always yields the right slice
-		const slice = derived([graphs, usingSubgraph], ([$graphs, $using], set) => {
+		const slice = derived([graphs, usingSubgraph], ([$graphs, $using]) => {
 			const g = $graphs[$using];
-			set(g ? g[field] : []);
+			return g ? g[field] : ([] as Graph[K]); // crucial type assertion here
 		});
 
 		return {
