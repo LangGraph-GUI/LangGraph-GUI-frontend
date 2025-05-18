@@ -1,3 +1,4 @@
+<!-- routes/flow/menu/sidebar.svelte -->
 <script lang="ts">
 	// Receive the open state and a toggle callback from the parent
 	export let open: boolean;

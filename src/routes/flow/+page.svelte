@@ -1,9 +1,10 @@
+<!-- src/routes/flow/+page.svelte -->
 <script lang="ts">
 	import { SvelteFlow, Controls, Background, MiniMap } from '@xyflow/svelte';
 	import '@xyflow/svelte/dist/style.css';
 
-	import Sidebar from './menu/Sidebar.svelte';
-	import { usingSubgraph, currentNodes, currentEdges } from './GraphStore.svelte';
+	import Sidebar from './menu/sidebar.svelte';
+	import { usingSubgraph, currentNodes, currentEdges } from './graph-store.svelte';
 
 	// Local state for sidebar visibility
 	let menuOpen = false;
