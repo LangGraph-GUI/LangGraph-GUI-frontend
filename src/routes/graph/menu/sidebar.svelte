@@ -3,7 +3,6 @@
 	// Receive the open state and a toggle callback from the parent
 	export let open: boolean;
 	export let onToggle: () => void;
-	import { usingSubgraph } from '../flow/graph-store.svelte'; // Import the store
 </script>
 
 <div class="sidebar {open ? 'open' : ''}">
@@ -13,12 +12,6 @@
 			<li><a href="#item1">Menu item 1</a></li>
 			<li><a href="#item2">Menu item 2</a></li>
 			<li><a href="#item3">Menu item 3</a></li>
-			<li>
-				<button on:click={() => usingSubgraph.set('default')}>Default Graph</button>
-			</li>
-			<li>
-				<button on:click={() => usingSubgraph.set('anotherKey')}>Another Graph</button>
-			</li>
 		</ul>
 	</nav>
 </div>

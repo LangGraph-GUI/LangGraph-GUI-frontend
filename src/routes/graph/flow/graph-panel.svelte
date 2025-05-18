@@ -3,17 +3,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { saveGraphs, loadGraphs } from './json-io.svelte';
+	import { graphs, usingSubgraph, type SubGraph } from './graph-store.svelte';
 
 	let isGraphMenuOpen = false;
 	let isSubGraphMenuOpen = false;
 	let graphMenuRef: HTMLDivElement;
 	let subGraphMenuRef: HTMLDivElement;
 
+
 	// Dummy data for subgraphs (replace with your actual data)
 	let subGraphs = [{ graphName: 'root' }, { graphName: 'Graph 1' }, { graphName: 'Graph 2' }];
 	let currentGraphName = 'root';
 
-	const handleAddGraph = () => {
+	const handleAddSubGraph = () => {
 		// Implement your logic here (currently does nothing)
 		closeMenus();
 	};
@@ -25,11 +27,6 @@
 
 	const handleRemoveGraph = () => {
 		// Implement your logic here (currently does nothing)
-		closeMenus();
-	};
-
-	const handleSelectGraph = (graphName: string) => {
-		currentGraphName = graphName; // Update the selected graph (no actual functionality)
 		closeMenus();
 	};
 
@@ -127,17 +124,13 @@
 		SubGraph:
 		<select
 			class="dropdown-menu ml-2 rounded border py-0"
-			bind:value={currentGraphName}
-			on:change={() => handleSelectGraph(currentGraphName)}
+			bind:value={$usingSubgraph}
+			on:change={(e: Event) => usingSubgraph.set((e.target as HTMLSelectElement).value)}
 			style="font-weight: bold;"
 		>
-			{#each subGraphs as graph}
-				<option
-					key={graph.graphName}
-					value={graph.graphName}
-					style="font-weight: {graph.graphName === currentGraphName ? 'bold' : 'normal'};"
-				>
-					{graph.graphName}
+			{#each Object.keys($graphs) as name}
+				<option value={name}>
+					{name}
 				</option>
 			{/each}
 		</select>
@@ -153,7 +146,7 @@
 		</button>
 		{#if isSubGraphMenuOpen}
 			<div class="dropdown-menu absolute left-0 z-10 mt-1">
-				<button class="block w-full px-4 py-2 text-left" on:click={handleAddGraph}
+				<button class="block w-full px-4 py-2 text-left" on:click={handleAddSubGraph}
 					>Add Subgraph</button
 				>
 				<button class="block w-full px-4 py-2 text-left" on:click={handleLoadSubGraph}

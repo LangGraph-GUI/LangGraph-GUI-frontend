@@ -2,7 +2,7 @@
 <script context="module" lang="ts">
 	import { get } from 'svelte/store';
 	import { graphs, usingSubgraph } from './graph-store.svelte';
-	import type { Graph } from './graph-store.svelte';
+	import type { SubGraph } from './graph-store.svelte';
 	import { saveJsonToFile, loadJsonFromFile } from '$lib/io/json';
 	import type { JsonNodeData } from './node-schema';
 	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from './node-schema';
@@ -29,7 +29,7 @@
 				nodes: JsonNodeData[];
 			}>;
 
-			const newMap: Record<string, Graph> = {};
+			const newMap: Record<string, SubGraph> = {};
 			arr.forEach((g) => {
 				newMap[g.name] = {
 					nodes: g.nodes.map(JsonNodeToSvelteNode),

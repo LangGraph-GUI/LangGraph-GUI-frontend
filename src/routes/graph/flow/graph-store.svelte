@@ -6,10 +6,10 @@
 	import type { FlowNode } from './node-schema'; // Import CustomNode
 
 	/** A graph consists of nodes and edges */
-	export type Graph = { nodes: FlowNode[]; edges: Edge[] };
+	export type SubGraph = { nodes: FlowNode[]; edges: Edge[] };
 
 	/** Initial set of named subgraphs */
-	const initialGraphs: Record<string, Graph> = {
+	const initialGraphs: Record<string, SubGraph> = {
 		default: {
 			nodes: [
 				{
@@ -24,11 +24,26 @@
 				}
 			],
 			edges: [{ id: '1-2', source: '1', target: '2' }]
+		},
+		second: {
+			nodes: [
+				{
+					id: '5',
+					data: { label: 'page', name: 'Node 1' },
+					position: { x: 333, y: 333 }
+				},
+				{
+					id: '6',
+					data: { label: 'dog', name: 'Node 2' },
+					position: { x: 5, y: 5 }
+				}
+			],
+			edges: [{ id: '5-6', source: '5', target: '5' }]
 		}
 	};
 
 	/** The single source of truth for all graphs */
-	export const graphs = writable<Record<string, Graph>>(initialGraphs);
+	export const graphs = writable<Record<string, SubGraph>>(initialGraphs);
 
 	/** Which subgraph key is currently active */
 	export const usingSubgraph = writable<string>('default');
@@ -37,23 +52,23 @@
 	 * Factory: produce a read/write store for one field
 	 * of the active subgraph object
 	 */
-	function makeCurrentStore<K extends keyof Graph>(
+	function makeCurrentStore<K extends keyof SubGraph>(
 		field: K
 	): {
-		subscribe: Writable<Graph[K]>['subscribe'];
-		set: (value: Graph[K]) => void;
-		update: (updater: (value: Graph[K]) => Graph[K]) => void;
+		subscribe: Writable<SubGraph[K]>['subscribe'];
+		set: (value: SubGraph[K]) => void;
+		update: (updater: (value: SubGraph[K]) => SubGraph[K]) => void;
 	} {
 		// A derived store that always yields the right slice
 		const slice = derived([graphs, usingSubgraph], ([$graphs, $using]) => {
 			const g = $graphs[$using];
-			return g ? g[field] : ([] as Graph[K]); // crucial type assertion here
+			return g ? g[field] : ([] as SubGraph[K]); // crucial type assertion here
 		});
 
 		return {
 			subscribe: slice.subscribe,
 			/** Replace the entire array in the active graph */
-			set(newItems: Graph[K]) {
+			set(newItems: SubGraph[K]) {
 				const key = get(usingSubgraph);
 				graphs.update((gmap) => {
 					if (!gmap[key]) gmap[key] = { nodes: [], edges: [] };
@@ -62,7 +77,7 @@
 				});
 			},
 			/** Update via an updater function */
-			update(fn: (items: Graph[K]) => Graph[K]) {
+			update(fn: (items: SubGraph[K]) => SubGraph[K]) {
 				const key = get(usingSubgraph);
 				graphs.update((gmap) => {
 					if (!gmap[key]) gmap[key] = { nodes: [], edges: [] };
