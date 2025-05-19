@@ -2,8 +2,8 @@
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { saveGraphs, loadGraphs } from './json-io.svelte';
-	import { graphs, usingSubgraph } from './graph-store.svelte';
+	import { saveGraphs, loadGraphs } from './graphs-io.svelte';
+	import { graphs, usingSubgraph } from './graph.store.svelte';
 
 	let isGraphMenuOpen = false;
 	let isSubGraphMenuOpen = false;

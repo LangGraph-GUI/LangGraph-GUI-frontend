@@ -1,8 +1,8 @@
 <!-- routes/graph/menu/json-io.svelte -->
 <script context="module" lang="ts">
 	import { get } from 'svelte/store';
-	import { graphs, usingSubgraph } from './graph-store.svelte';
-	import type { SubGraph } from './graph-store.svelte';
+	import { graphs, usingSubgraph } from './graph.store.svelte';
+	import type { SubGraph } from './graph.store.svelte';
 	import { saveJsonToFile, loadJsonFromFile } from '$lib/io/json';
 	import type { JsonNodeData } from './node-schema';
 	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from './node-schema';

@@ -5,7 +5,7 @@
 
 	import Sidebar from './menu/sidebar.svelte';
 	import GraphPanel from './flow/graph-panel.svelte';
-	import { currentNodes, currentEdges } from './flow/graph-store.svelte';
+	import { currentNodes, currentEdges } from './flow/graph.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 
 	// Local state for sidebar visibility
