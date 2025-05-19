@@ -1,4 +1,4 @@
-// lib/graph/node-data.ts
+// routes/graph/flow/node-schema.ts
 
 export interface JsonNodeData {
 	uniq_id: string;
@@ -23,6 +23,7 @@ import type { Node } from '@xyflow/svelte';
 export type FlowNodeData = {
 	label: string;
 	name: string;
+	type: string;
 };
 
 export type FlowNode = Node<FlowNodeData>;
@@ -30,9 +31,12 @@ export type FlowNode = Node<FlowNodeData>;
 export function JsonNodeToSvelteNode(json: JsonNodeData): FlowNode {
 	return {
 		id: json.uniq_id,
+		type: 'textNode',
+
 		data: {
 			name: json.name,
-			label: json.description
+			label: json.description,
+			type: json.type
 		} as FlowNodeData,
 		position: {
 			x: json.ext.pos_x ?? 0,
@@ -47,7 +51,7 @@ export function SvelteNodeToJsonNode(node: FlowNode): JsonNodeData {
 		name: node.data.name,
 		description: node.data.label,
 		nexts: [],
-		type: undefined,
+		type: node.data.type,
 		tool: '',
 		true_next: null,
 		false_next: null,

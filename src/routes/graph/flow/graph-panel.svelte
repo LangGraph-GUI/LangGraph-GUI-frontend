@@ -3,16 +3,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { saveGraphs, loadGraphs } from './json-io.svelte';
-	import { graphs, usingSubgraph, type SubGraph } from './graph-store.svelte';
+	import { graphs, usingSubgraph } from './graph-store.svelte';
 
 	let isGraphMenuOpen = false;
 	let isSubGraphMenuOpen = false;
 	let graphMenuRef: HTMLDivElement;
 	let subGraphMenuRef: HTMLDivElement;
 
-
 	// Dummy data for subgraphs (replace with your actual data)
-	let subGraphs = [{ graphName: 'root' }, { graphName: 'Graph 1' }, { graphName: 'Graph 2' }];
 	let currentGraphName = 'root';
 
 	const handleAddSubGraph = () => {
