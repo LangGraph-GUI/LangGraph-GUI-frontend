@@ -2,18 +2,28 @@
 
 <script lang="ts">
 	import type { NodeProps } from '@xyflow/svelte';
+	import { useSvelteFlow } from '@xyflow/svelte';
 
-	// Access node properties through NodeProps
-	let { data }: NodeProps = $props(); // We do not need id or others
+	let { id, data }: NodeProps = $props();
+	const { updateNodeData } = useSvelteFlow();
 </script>
 
 <div class="node-layout">
-	<div class="node-label">
-		{data.name}
-	</div>
-	<!-- You can add more content here, like the label or other data -->
-	<div class="node-label">
-		{data.label}
+	<!-- editable name via `oninput` -->
+	name:
+	<input
+		class="node-name nodrag"
+		type="text"
+		value={data.name}
+		oninput={(e) => {
+			// currentTarget is typed correctly in runes mode
+			const target = e.currentTarget as HTMLInputElement;
+			updateNodeData(id, { name: target.value });
+		}}
+	/>
+
+	<div class="node-description">
+		{data.description}
 	</div>
 </div>
 
@@ -24,11 +34,24 @@
 		padding: 10px;
 		border-radius: 5px;
 		text-align: center;
+		width: 150px;
 	}
 
-	.node-label {
+	.node-name {
+		background-color: white;
 		font-size: 14px;
-		font-weight: bold;
-		margin-bottom: 5px;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.node-description {
+		font-size: 12px;
+		color: #666;
+	}
+
+	.nodrag {
+		touch-action: none;
+		user-select: text;
+		cursor: text;
 	}
 </style>

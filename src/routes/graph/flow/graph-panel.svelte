@@ -126,7 +126,7 @@
 			on:change={(e: Event) => usingSubgraph.set((e.target as HTMLSelectElement).value)}
 			style="font-weight: bold;"
 		>
-			{#each Object.keys($graphs) as name}
+			{#each Object.keys($graphs) as name (name)}
 				<option value={name}>
 					{name}
 				</option>

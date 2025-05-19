@@ -21,7 +21,7 @@ export interface JsonNodeData {
 import type { Node } from '@xyflow/svelte';
 
 export type FlowNodeData = {
-	label: string;
+	description: string;
 	name: string;
 	type: string;
 };
@@ -35,7 +35,7 @@ export function JsonNodeToSvelteNode(json: JsonNodeData): FlowNode {
 
 		data: {
 			name: json.name,
-			label: json.description,
+			description: json.description,
 			type: json.type
 		} as FlowNodeData,
 		position: {
@@ -49,7 +49,7 @@ export function SvelteNodeToJsonNode(node: FlowNode): JsonNodeData {
 	return {
 		uniq_id: node.id,
 		name: node.data.name,
-		description: node.data.label,
+		description: node.data.description,
 		nexts: [],
 		type: node.data.type,
 		tool: '',
