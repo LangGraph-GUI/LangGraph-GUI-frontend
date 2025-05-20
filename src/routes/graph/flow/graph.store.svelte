@@ -1,5 +1,5 @@
 <!-- routes/graph/flow/graph-store.svelte -->
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { writable, derived, get } from 'svelte/store';
 	import type { Edge } from '@xyflow/svelte';
 	import type { Writable } from 'svelte/store';

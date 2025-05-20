@@ -5,8 +5,8 @@
 	import { saveGraphs, loadGraphs } from './graphs-io.svelte';
 	import { graphs, usingSubgraph } from './graph.store.svelte';
 
-	let isGraphMenuOpen = false;
-	let isSubGraphMenuOpen = false;
+	let isGraphMenuOpen = $state(false);
+	let isSubGraphMenuOpen = $state(false);
 	let graphMenuRef: HTMLDivElement;
 	let subGraphMenuRef: HTMLDivElement;
 
@@ -68,6 +68,10 @@
 		isSubGraphMenuOpen = false;
 	};
 
+	const handleSubgraphChange = (e: Event) => {
+		usingSubgraph.set((e.target as HTMLSelectElement).value);
+	};
+
 	// Close menus when clicking outside
 	onMount(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -95,7 +99,7 @@
 
 <nav class="z-20 flex items-center justify-center p-2">
 	<div class="relative mr-2" bind:this={graphMenuRef}>
-		<button class={classList} on:click={toggleGraphMenu}>
+		<button class={classList} onclick={toggleGraphMenu}>
 			Graph
 			<svg class="ml-2 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 				><path
@@ -105,13 +109,13 @@
 		</button>
 		{#if isGraphMenuOpen}
 			<div class="dropdown-menu absolute left-0 z-10 mt-1">
-				<button class="block w-full px-4 py-2 text-left" on:click={handleNewGraphs}
+				<button class="block w-full px-4 py-2 text-left" onclick={handleNewGraphs}
 					>New Graphs</button
 				>
-				<button class="block w-full px-4 py-2 text-left" on:click={handleLoadGraphs}
+				<button class="block w-full px-4 py-2 text-left" onclick={handleLoadGraphs}
 					>Load Graphs</button
 				>
-				<button class="block w-full px-4 py-2 text-left" on:click={handleSaveGraphs}
+				<button class="block w-full px-4 py-2 text-left" onclick={handleSaveGraphs}
 					>Save Graphs</button
 				>
 			</div>
@@ -123,7 +127,7 @@
 		<select
 			class="dropdown-menu ml-2 rounded border py-0"
 			bind:value={$usingSubgraph}
-			on:change={(e: Event) => usingSubgraph.set((e.target as HTMLSelectElement).value)}
+			onchange={handleSubgraphChange}
 			style="font-weight: bold;"
 		>
 			{#each Object.keys($graphs) as name (name)}
@@ -134,7 +138,7 @@
 		</select>
 	</div>
 	<div class="relative" bind:this={subGraphMenuRef}>
-		<button class={classList} on:click={toggleSubGraphMenu}>
+		<button class={classList} onclick={toggleSubGraphMenu}>
 			...
 			<svg class="ml-2 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 				><path
@@ -144,20 +148,20 @@
 		</button>
 		{#if isSubGraphMenuOpen}
 			<div class="dropdown-menu absolute left-0 z-10 mt-1">
-				<button class="block w-full px-4 py-2 text-left" on:click={handleAddSubGraph}
+				<button class="block w-full px-4 py-2 text-left" onclick={handleAddSubGraph}
 					>Add Subgraph</button
 				>
-				<button class="block w-full px-4 py-2 text-left" on:click={handleLoadSubGraph}
+				<button class="block w-full px-4 py-2 text-left" onclick={handleLoadSubGraph}
 					>Load Subgraph</button
 				>
-				<button class="block w-full px-4 py-2 text-left" on:click={handleSaveSubGraph}
+				<button class="block w-full px-4 py-2 text-left" onclick={handleSaveSubGraph}
 					>Save Subgraph</button
 				>
 				{#if currentGraphName !== 'root'}
-					<button class="block w-full px-4 py-2 text-left" on:click={handleRenameGraph}
+					<button class="block w-full px-4 py-2 text-left" onclick={handleRenameGraph}
 						>Rename Subgraph</button
 					>
-					<button class="block w-full px-4 py-2 text-left" on:click={handleRemoveGraph}
+					<button class="block w-full px-4 py-2 text-left" onclick={handleRemoveGraph}
 						>Remove Subgraph</button
 					>
 				{/if}

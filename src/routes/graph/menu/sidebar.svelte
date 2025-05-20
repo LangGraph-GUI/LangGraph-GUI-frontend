@@ -1,12 +1,16 @@
 <!-- routes/graph/menu/sidebar.svelte -->
 <script lang="ts">
 	// Receive the open state and a toggle callback from the parent
-	export let open: boolean;
-	export let onToggle: () => void;
+	// In runes mode, use $props() instead of export let
+	const { open, onToggle } = $props<{
+		open: boolean;
+		onToggle: () => void;
+	}>();
 </script>
 
 <div class="sidebar {open ? 'open' : ''}">
-	<button class="toggle-btn" on:click={onToggle}>☰</button>
+	<!-- In runes mode, use the standard HTML onclick attribute -->
+	<button class="toggle-btn" onclick={onToggle}>☰</button>
 	<nav>
 		<ul>
 			<li><a href="#item1">Menu item 1</a></li>
@@ -52,6 +56,13 @@
 	nav li + li {
 		margin-top: 0.5rem;
 	}
+	/* Styles for the toggle button within the sidebar context */
+	.sidebar .toggle-btn {
+		/* The styles above are specific to .toggle-btn, no need to repeat button general styles */
+		/* But if you had general button styles, you might override them here */
+	}
+
+	/* General button styles (can be removed if only .toggle-btn uses these properties) */
 	button {
 		cursor: pointer; /* Makes the button appear clickable */
 		padding: 0.5rem 1rem; /* Adds some padding for better appearance */

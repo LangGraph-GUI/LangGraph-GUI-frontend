@@ -1,5 +1,5 @@
 <!-- routes/graph/menu/json-io.svelte -->
-<script context="module" lang="ts">
+<script lang="ts" module>
 	import { get } from 'svelte/store';
 	import { graphs, usingSubgraph } from './graph.store.svelte';
 	import type { SubGraph } from './graph.store.svelte';

@@ -9,13 +9,13 @@
 	import NodeLayout from './flow/node-layout.svelte';
 
 	// Local state for sidebar visibility
-	let menuOpen = false;
+	let menuOpen = $state(false);
 	function toggleMenu() {
 		menuOpen = !menuOpen;
 	}
 
 	// Optional: slide the graph over when the menu is open
-	$: contentOffset = menuOpen ? 200 : 0;
+	let contentOffset = $derived(menuOpen ? 200 : 0);
 
 	// Register the custom node type
 	const nodeTypes = {
