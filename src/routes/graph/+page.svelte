@@ -5,7 +5,7 @@
 
 	import Sidebar from './menu/sidebar.svelte';
 	import GraphPanel from './flow/graph-panel.svelte';
-	import Control from './flow/control.svelte';
+	import GraphControl from './flow/graph-control.svelte';
 	import { currentNodes, currentEdges } from './flow/graph.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 
@@ -30,13 +30,13 @@
 	<div class="panel-container">
 		<GraphPanel />
 	</div>
-	<Control>
+	<GraphControl>
 		<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} {nodeTypes} fitView>
 			<Controls />
 			<Background />
 			<MiniMap />
 		</SvelteFlow>
-	</Control>
+	</GraphControl>
 </div>
 
 <style>

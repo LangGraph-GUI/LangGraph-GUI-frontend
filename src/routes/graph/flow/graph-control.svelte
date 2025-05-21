@@ -1,4 +1,4 @@
-<!-- routes/graph/flow/control.svelte -->
+<!-- routes/graph/flow/graph-control.svelte -->
 <script lang="ts">
 	// get child content via snippet
 	let { children } = $props();
