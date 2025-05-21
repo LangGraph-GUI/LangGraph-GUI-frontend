@@ -122,13 +122,13 @@
 		{/if}
 	</div>
 
-	<div class="mr-2 py-0 px-2" style="background-color: white;">
+	<div class="mr-2 py-0 px-2 rounded-md bg-white">
 		SubGraph:
 		<select
 			class="dropdown-menu ml-2 rounded border py-1"
 			bind:value={$usingSubgraph}
 			onchange={handleSubgraphChange}
-			style="font-weight: bold; background-color: Gainsboro;"
+			style="font-weight: bold; background-color: rgb(225, 225, 225);"
 		>
 			{#each Object.keys($graphs) as name (name)}
 				<option value={name}>
