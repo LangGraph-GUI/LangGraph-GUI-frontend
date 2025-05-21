@@ -1,20 +1,48 @@
 <!-- routes/graph/flow/control.svelte -->
 <script lang="ts">
-	// pull in the snippet function instead of using <slot/>
-	let { children } = $props(); // Svelte 5: slots → snippets :contentReference[oaicite:1]{index=1}
+	// get child content via snippet
+	let { children } = $props();
 
-	// reactive count & menu state
+	// reactive counter
 	let count = $state(0);
-	let menu = $state({ show: false, x: 0, y: 0 });
+
+	// track menu position, whether it was a node, and its id
+	let menu = $state<{
+		show: boolean;
+		x: number;
+		y: number;
+		isNode: boolean;
+		nodeId: string | null;
+	}>({
+		show: false,
+		x: 0,
+		y: 0,
+		isNode: false,
+		nodeId: null
+	});
 
 	function handleContextMenu(event: MouseEvent) {
 		event.preventDefault();
-		menu = { show: true, x: event.clientX, y: event.clientY };
+
+		// detect node via data-id attribute
+		const el = (event.target as HTMLElement).closest('[data-id]');
+		menu = {
+			show: true,
+			x: event.clientX,
+			y: event.clientY,
+			isNode: !!el,
+			nodeId: el?.getAttribute('data-id') ?? null
+		};
 	}
 
-	function addOne() {
-		count += 1;
-		console.log('TEST clicked – count is now', count);
+	function onTest() {
+		if (menu.isNode && menu.nodeId) {
+			count -= 1;
+			console.log(`TEST clicked on node ${menu.nodeId} → count is now ${count}`);
+		} else {
+			count += 1;
+			console.log(`TEST clicked on canvas → count is now ${count}`);
+		}
 		menu = { ...menu, show: false };
 	}
 </script>
@@ -24,7 +52,7 @@
 
 	{#if menu.show}
 		<div class="context-menu" role="menu" style="top: {menu.y}px; left: {menu.x}px;">
-			<button type="button" role="menuitem" onclick={addOne}> TEST </button>
+			<button type="button" role="menuitem" onclick={onTest}> TEST </button>
 		</div>
 	{/if}
 </div>
