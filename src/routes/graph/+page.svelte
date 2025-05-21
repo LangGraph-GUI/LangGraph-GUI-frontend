@@ -5,34 +5,36 @@
 
 	import Sidebar from './menu/sidebar.svelte';
 	import GraphPanel from './flow/graph-panel.svelte';
+	import Control from './flow/control.svelte'; 
 	import { currentNodes, currentEdges } from './flow/graph.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 
-	// Local state for sidebar visibility
+	// sidebar toggle
 	let menuOpen = $state(false);
 	function toggleMenu() {
 		menuOpen = !menuOpen;
 	}
 
-	// Optional: slide the graph over when the menu is open
+	// slide offset when sidebar open
 	let contentOffset = $derived(menuOpen ? 200 : 0);
 
-	// Register the custom node type
+	// custom node types
 	const nodeTypes = {
 		textNode: NodeLayout
 	};
 </script>
 
-<!-- Use correct prop binding syntax: propName={value} -->
 <Sidebar open={menuOpen} onToggle={toggleMenu} />
 
 <div class="content-wrapper" style="transform: translateX({contentOffset}px)">
 	<GraphPanel />
-	<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} {nodeTypes} fitView>
-		<Controls />
-		<Background />
-		<MiniMap />
-	</SvelteFlow>
+	<Control>
+		<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} {nodeTypes} fitView>
+			<Controls />
+			<Background />
+			<MiniMap />
+		</SvelteFlow>
+	</Control>
 </div>
 
 <style>

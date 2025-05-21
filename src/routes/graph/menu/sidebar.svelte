@@ -56,13 +56,6 @@
 	nav li + li {
 		margin-top: 0.5rem;
 	}
-	/* Styles for the toggle button within the sidebar context */
-	.sidebar .toggle-btn {
-		/* The styles above are specific to .toggle-btn, no need to repeat button general styles */
-		/* But if you had general button styles, you might override them here */
-	}
-
-	/* General button styles (can be removed if only .toggle-btn uses these properties) */
 	button {
 		cursor: pointer; /* Makes the button appear clickable */
 		padding: 0.5rem 1rem; /* Adds some padding for better appearance */
