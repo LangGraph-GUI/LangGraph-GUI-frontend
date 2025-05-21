@@ -27,7 +27,9 @@
 <Sidebar open={menuOpen} onToggle={toggleMenu} />
 
 <div class="content-wrapper" style="transform: translateX({contentOffset}px)">
-	<GraphPanel />
+	<div class="panel-container">
+		<GraphPanel />
+	</div>
 	<Control>
 		<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} {nodeTypes} fitView>
 			<Controls />
@@ -38,6 +40,12 @@
 </div>
 
 <style>
+	.panel-container {
+		position: absolute;
+		width: 100%;
+		z-index: 10;
+	}
+
 	.content-wrapper {
 		position: absolute;
 		top: 0;
