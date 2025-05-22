@@ -2,47 +2,72 @@
 <script lang="ts">
 	// get child content via snippet
 	let { children } = $props();
-
-	// reactive counter
-	let count = $state(0);
-
-	// track menu position, whether it was a node, and its id
 	let menu = $state<{
 		show: boolean;
 		x: number;
 		y: number;
-		isNode: boolean;
-		nodeId: string | null;
+		type: 'node' | 'edge' | 'canvas';
+		elementId: string | null;
 	}>({
 		show: false,
 		x: 0,
 		y: 0,
-		isNode: false,
-		nodeId: null
+		type: 'canvas',
+		elementId: null
 	});
 
 	function handleContextMenu(event: MouseEvent) {
 		event.preventDefault();
 
 		// detect node via data-id attribute
-		const el = (event.target as HTMLElement).closest('[data-id]');
-		menu = {
-			show: true,
-			x: event.clientX,
-			y: event.clientY,
-			isNode: !!el,
-			nodeId: el?.getAttribute('data-id') ?? null
-		};
+		const Object = (event.target as HTMLElement).closest('[data-id]');
+		if (Object) {
+			const obj_id = Object.getAttribute('data-id');
+			if (obj_id) {
+				if (obj_id.startsWith('xy-edge')) {
+					menu = {
+						show: true,
+						x: event.clientX,
+						y: event.clientY,
+						type: 'edge',
+						elementId: obj_id
+					};
+				} else {
+					menu = {
+						show: true,
+						x: event.clientX,
+						y: event.clientY,
+						type: 'node',
+						elementId: obj_id
+					};
+				}
+			}
+		} else {
+			menu = {
+				show: true,
+				x: event.clientX,
+				y: event.clientY,
+				type: 'canvas',
+				elementId: null
+			};
+		}
 	}
 
-	function onTest() {
-		if (menu.isNode && menu.nodeId) {
-			count -= 1;
-			console.log(`TEST clicked on node ${menu.nodeId} → count is now ${count}`);
-		} else {
-			count += 1;
-			console.log(`TEST clicked on canvas → count is now ${count}`);
-		}
+	function onAddNode() {
+		// TODO: implement add node functionality
+		console.log('Add Node clicked');
+		menu = { ...menu, show: false };
+	}
+
+	function onRemoveNode() {
+		// TODO: implement remove node functionality
+		console.log(`Remove Node clicked for node ${menu.elementId}`);
+		menu = { ...menu, show: false };
+	}
+
+	function onRemoveEdge() {
+		// TODO: implement remove edge functionality
+		console.log(`Remove Edge clicked for edge ${menu.elementId}`);
 		menu = { ...menu, show: false };
 	}
 
@@ -65,10 +90,15 @@
 
 <div class="canvas-container" role="application" oncontextmenu={handleContextMenu}>
 	{@render children()}
-
 	{#if menu.show}
 		<div class="context-menu" role="menu" style="top: {menu.y}px; left: {menu.x}px;">
-			<button type="button" role="menuitem" onclick={onTest}> TEST </button>
+			{#if menu.type === 'node'}
+				<button type="button" role="menuitem" onclick={onRemoveNode}>Remove Node</button>
+			{:else if menu.type === 'edge'}
+				<button type="button" role="menuitem" onclick={onRemoveEdge}>Remove Edge</button>
+			{:else}
+				<button type="button" role="menuitem" onclick={onAddNode}>Add Node</button>
+			{/if}
 		</div>
 	{/if}
 </div>
@@ -85,5 +115,19 @@
 		border: 1px solid #888;
 		padding: 0.5em;
 		z-index: 10;
+		border-radius: 4px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	}
+	.context-menu button {
+		display: block;
+		width: 100%;
+		padding: 0.5em;
+		border: none;
+		background: none;
+		text-align: left;
+		cursor: pointer;
+	}
+	.context-menu button:hover {
+		background: #f0f0f0;
 	}
 </style>
