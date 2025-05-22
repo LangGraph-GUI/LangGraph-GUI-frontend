@@ -4,9 +4,9 @@
 	import '@xyflow/svelte/dist/style.css';
 
 	import Sidebar from './menu/sidebar.svelte';
-	import GraphPanel from './flow/graph-panel.svelte';
-	import GraphControl from './flow/graph-control.svelte';
-	import { currentNodes, currentEdges } from './flow/graph.store.svelte';
+	import GraphPanel from './flow/graphs-panel.svelte';
+	import GraphControl from './flow/graphs-button.svelte';
+	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 
 	// sidebar toggle

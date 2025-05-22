@@ -1,13 +1,14 @@
-<!-- routes/graph/flow/graph-panel.svelte -->
+<!-- routes/graph/flow/graphs-panel.svelte -->
 
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { saveGraphs, loadGraphs } from './graphs-io.svelte';
-	import { graphs, usingSubgraph } from './graph.store.svelte';
+	import { graphs, usingSubgraph } from './graphs.store.svelte';
 
-	let isGraphMenuOpen = $state(false);
+	let isGraphsMenuOpen = $state(false);
+	let graphsMenuRef: HTMLDivElement;
+
 	let isSubGraphMenuOpen = $state(false);
-	let graphMenuRef: HTMLDivElement;
 	let subGraphMenuRef: HTMLDivElement;
 
 	// Dummy data for subgraphs (replace with your actual data)
@@ -54,17 +55,17 @@
 	};
 
 	const toggleGraphMenu = () => {
-		isGraphMenuOpen = !isGraphMenuOpen;
+		isGraphsMenuOpen = !isGraphsMenuOpen;
 		isSubGraphMenuOpen = false;
 	};
 
 	const toggleSubGraphMenu = () => {
 		isSubGraphMenuOpen = !isSubGraphMenuOpen;
-		isGraphMenuOpen = false;
+		isGraphsMenuOpen = false;
 	};
 
 	const closeMenus = () => {
-		isGraphMenuOpen = false;
+		isGraphsMenuOpen = false;
 		isSubGraphMenuOpen = false;
 	};
 
@@ -76,8 +77,8 @@
 	onMount(() => {
 		const handleClickOutside = (event: MouseEvent) => {
 			if (
-				graphMenuRef &&
-				!graphMenuRef.contains(event.target as Node) &&
+				graphsMenuRef &&
+				!graphsMenuRef.contains(event.target as Node) &&
 				subGraphMenuRef &&
 				!subGraphMenuRef.contains(event.target as Node)
 			) {
@@ -98,7 +99,7 @@
 </script>
 
 <nav class="z-20 flex items-center justify-center p-2">
-	<div class="relative mr-2" bind:this={graphMenuRef}>
+	<div class="relative mr-2" bind:this={graphsMenuRef}>
 		<button class={classList} onclick={toggleGraphMenu}>
 			Graph
 			<svg class="ml-2 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -107,7 +108,7 @@
 				/></svg
 			>
 		</button>
-		{#if isGraphMenuOpen}
+		{#if isGraphsMenuOpen}
 			<div class="dropdown-menu absolute left-0 z-10 mt-1">
 				<button class="block w-full px-4 py-2 text-left" onclick={handleNewGraphs}
 					>New Graphs</button

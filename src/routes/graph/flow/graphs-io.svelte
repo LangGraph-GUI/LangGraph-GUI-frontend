@@ -1,17 +1,16 @@
-<!-- routes/graph/menu/json-io.svelte -->
+<!-- routes/graph/menu/graphs-io.svelte -->
 <script lang="ts" module>
 	import { get } from 'svelte/store';
-	import { graphs, usingSubgraph } from './graph.store.svelte';
-	import type { SubGraph } from './graph.store.svelte';
+	import { graphs, usingSubgraph } from './graphs.store.svelte';
+	import type { SubGraph } from './graphs.store.svelte';
 	import { saveJsonToFile, loadJsonFromFile } from '$lib/io/json';
 	import type { JsonNodeData } from './node-schema';
 	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from './node-schema';
 
 	export async function saveGraphs(): Promise<void> {
 		const gm = get(graphs);
-		const out = Object.entries(gm).map(([name, g], idx) => ({
+		const out = Object.entries(gm).map(([name, g]) => ({
 			name,
-			serial_number: idx,
 			nodes: g.nodes.map(SvelteNodeToJsonNode)
 		}));
 		saveJsonToFile('graphs.json', out);
@@ -25,7 +24,6 @@
 		try {
 			const arr = (await loadJsonFromFile()) as Array<{
 				name: string;
-				serial_number: number;
 				nodes: JsonNodeData[];
 			}>;
 
