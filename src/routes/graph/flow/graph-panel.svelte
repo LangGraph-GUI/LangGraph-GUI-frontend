@@ -122,7 +122,7 @@
 		{/if}
 	</div>
 
-	<div class="mr-2 py-0 px-2 rounded-md bg-white">
+	<div class="mr-2 rounded-md bg-white px-2 py-0">
 		SubGraph:
 		<select
 			class="dropdown-menu ml-2 rounded border py-1"

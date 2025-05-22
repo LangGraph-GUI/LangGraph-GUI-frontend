@@ -45,6 +45,22 @@
 		}
 		menu = { ...menu, show: false };
 	}
+
+	function handleClickOutside(event: MouseEvent) {
+		if (menu.show) {
+			const menuElement = document.querySelector('.context-menu');
+			if (menuElement && !menuElement.contains(event.target as Node)) {
+				menu = { ...menu, show: false };
+			}
+		}
+	}
+
+	$effect(() => {
+		window.addEventListener('click', handleClickOutside);
+		return () => {
+			window.removeEventListener('click', handleClickOutside);
+		};
+	});
 </script>
 
 <div class="canvas-container" role="application" oncontextmenu={handleContextMenu}>
