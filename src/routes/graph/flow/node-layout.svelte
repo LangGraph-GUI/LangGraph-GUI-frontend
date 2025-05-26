@@ -1,4 +1,4 @@
-<!-- src/routes/graph/flow/node-layout.svelte -->
+<!-- routes/graph/flow/node-layout.svelte -->
 <script lang="ts">
 	import type { NodeProps } from '@xyflow/svelte';
 	import { useSvelteFlow } from '@xyflow/svelte';

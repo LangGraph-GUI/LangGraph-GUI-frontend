@@ -1,5 +1,7 @@
 <!-- routes/graph/flow/graph-button.svelte -->
 <script lang="ts">
+	import { AddNode } from './nodes-control.svelte';
+
 	// get child content via snippet
 	let { children } = $props();
 	let menu = $state<{
@@ -54,7 +56,7 @@
 	}
 
 	function onAddNode() {
-		// TODO: implement add node functionality
+		AddNode()
 		console.log('Add Node clicked');
 		menu = { ...menu, show: false };
 	}

@@ -1,4 +1,4 @@
-<!-- src/routes/graph/flow/node-handles.svelte -->
+<!-- routes/graph/flow/node-handles.svelte -->
 <script lang="ts">
 	import { Handle, Position } from '@xyflow/svelte';
 </script>
