@@ -5,7 +5,7 @@
 
 	import Sidebar from './menu/sidebar.svelte';
 	import GraphPanel from './flow/graphs-panel.svelte';
-	import GraphControl from './flow/graphs-button.svelte';
+	import GraphControl from './flow/graph-button.svelte';
 	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 
