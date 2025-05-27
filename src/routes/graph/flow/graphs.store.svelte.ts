@@ -11,14 +11,12 @@ import type { FlowNode } from './node-schema';
 export type SubGraph = { nodes: FlowNode[]; edges: Edge[] };
 
 /** The single source of truth for all graphs */
-export let graphs = writable<Record<string, SubGraph>>({});
+export const graphs = writable<Record<string, SubGraph>>({});
 
-export let serial_numbers = new SvelteMap<string, number>();
+export const serial_numbers = new SvelteMap<string, number>();
 
 /** Which subgraph key is currently active */
-export let usingSubgraph = writable<string>('root');
-
-
+export const usingSubgraph = writable<string>('root');
 
 /**
  * Factory: produce a read/write store for one field
@@ -61,5 +59,5 @@ function makeCurrentStore<K extends keyof SubGraph>(
 }
 
 /** Export read/write stores bound to the active subgraph */
-export let currentNodes = makeCurrentStore('nodes');
-export let currentEdges = makeCurrentStore('edges');
+export const currentNodes = makeCurrentStore('nodes');
+export const currentEdges = makeCurrentStore('edges');

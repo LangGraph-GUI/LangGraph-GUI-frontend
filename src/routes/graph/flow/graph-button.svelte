@@ -56,7 +56,7 @@
 	}
 
 	function onAddNode() {
-		AddNode()
+		AddNode(menu.x, menu.y);
 		console.log('Add Node clicked');
 		menu = { ...menu, show: false };
 	}
