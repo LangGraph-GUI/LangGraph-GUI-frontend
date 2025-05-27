@@ -1,9 +1,9 @@
-<!-- routes/graph/flow/graphs-panel.svelte -->
+<!-- routes/graph/menu/graphs-panel.svelte -->
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { saveGraphs, loadGraphs } from './graphs-io.svelte';
-	import { graphs, usingSubgraph } from './graphs.store.svelte';
+	import { saveGraphs, loadGraphs } from '../flow/graphs-io.svelte';
+	import { graphs, usingSubgraph } from '../flow/graphs.store.svelte';
 
 	let isGraphsMenuOpen = $state(false);
 	let graphsMenuRef: HTMLDivElement;

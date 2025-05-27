@@ -4,10 +4,11 @@
 	import '@xyflow/svelte/dist/style.css';
 
 	import Sidebar from './menu/sidebar.svelte';
-	import GraphPanel from './flow/graphs-panel.svelte';
-	import GraphControl from './flow/graph-button.svelte';
+	import GraphsPanel from './menu/graphs-panel.svelte';
+	import GraphButton from './menu/graph-button.svelte';
 	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
+	import FlowAlgo from './flow/flow-algo.svelte';
 
 	// sidebar toggle
 	let menuOpen = $state(false);
@@ -28,15 +29,16 @@
 
 <div class="content-wrapper" style="transform: translateX({contentOffset}px)">
 	<div class="panel-container">
-		<GraphPanel />
+		<GraphsPanel />
 	</div>
-	<GraphControl>
+	<GraphButton>
 		<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} {nodeTypes} fitView>
 			<Controls />
 			<Background />
 			<MiniMap />
+			<FlowAlgo />
 		</SvelteFlow>
-	</GraphControl>
+	</GraphButton>
 </div>
 
 <style>
