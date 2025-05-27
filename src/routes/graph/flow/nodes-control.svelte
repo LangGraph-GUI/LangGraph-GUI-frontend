@@ -1,28 +1,30 @@
 <!-- routes/graph/flow/nodes-control.svelte -->
-
 <script lang="ts" module>
 	import { get } from 'svelte/store';
 	import { usingSubgraph, serial_numbers, currentNodes } from './graphs.store.svelte';
 	import type { FlowNode } from './node-schema';
+	import { screenToFlow } from '../flow/flow-position.store';
 
 	export function AddNode(screen_x: number, screen_y: number): void {
+		// This will never be null—at worst it's our fallback that returns {0,0}
+		const ScreenToFlow = get(screenToFlow);
+		const { x, y } = ScreenToFlow({ x: screen_x, y: screen_y });
+
 		const key = get(usingSubgraph);
-		let serial_number = serial_numbers.get(key) ?? 1;
+		const serial = serial_numbers.get(key) ?? 1;
 
 		const newNode: FlowNode = {
-			id: String(serial_number),
-			type: 'textNode', // Or another default node type if you have one
-
+			id: String(serial),
+			type: 'textNode',
 			data: {
-				name: 'New Node', // Or a more descriptive default name
-				description: 'Enter description here', // Or a default description
+				name: 'New Node',
+				description: 'Enter description here',
 				type: 'STEP'
 			},
-			position: { x: screen_x, y: screen_y }
+			position: { x, y }
 		};
 
-		serial_numbers.set(key, serial_number + 1);
-
+		serial_numbers.set(key, serial + 1);
 		currentNodes.update((nodes) => [...nodes, newNode]);
 	}
 </script>

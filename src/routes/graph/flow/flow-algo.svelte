@@ -1,12 +1,13 @@
 <!-- routes/graph/flow/flow-algo.svelte -->
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { useSvelteFlow } from '@xyflow/svelte';
+	import { screenToFlow } from './flow-position.store';
 
-	// Get SvelteFlow context - this must be in regular script, not module script
 	const { screenToFlowPosition } = useSvelteFlow();
 
-	// Function to convert screen coordinates to flow coordinates
-	export function getFlowPosition(screen_x: number, screen_y: number) {
-		return screenToFlowPosition({ x: screen_x, y: screen_y });
-	}
+	onMount(() => {
+		// Replace the zero-return stub with the real converter
+		screenToFlow.set(screenToFlowPosition);
+	});
 </script>
