@@ -4,28 +4,28 @@
 </script>
 
 <!-- target on left -->
-<Handle
-	id="left"
-	type="target"
-	position={Position.Left}
-	style="left: -4px; top: calc(50% - 4px);"
-/>
-
-<!-- source on top -->
-<Handle id="top" type="source" position={Position.Top} style="top: -4px; left: calc(50% - 4px);" />
+<Handle id="in" type="target" position={Position.Left} style="left: -4px; top: calc(50% - 4px);" />
 
 <!-- source on right -->
 <Handle
-	id="right"
+	id="next"
 	type="source"
 	position={Position.Right}
 	style="right: -4px; top: calc(50% - 4px);"
 />
 
+<!-- source on top -->
+<Handle
+	id="true"
+	type="source"
+	position={Position.Top}
+	style="background: green; top: -4px; left: calc(50% - 4px);"
+/>
+
 <!-- source on bottom -->
 <Handle
-	id="bottom"
+	id="false"
 	type="source"
 	position={Position.Bottom}
-	style="bottom: -4px; left: calc(50% - 4px);"
+	style="background: red; bottom: -4px; left: calc(50% - 4px);"
 />

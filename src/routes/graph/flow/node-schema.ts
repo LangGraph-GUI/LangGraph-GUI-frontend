@@ -1,11 +1,20 @@
 // routes/graph/flow/node-schema.ts
 
+export enum NodeType {
+	START = 'START',
+	STEP = 'STEP',
+	TOOL = 'TOOL',
+	CONDITION = 'CONDITION',
+	INFO = 'INFO',
+	SUBGRAPH = 'SUBGRAPH'
+}
+
 export interface JsonNodeData {
 	uniq_id: string;
 	name: string;
 	description: string;
 	nexts: string[];
-	type?: string;
+	type: string;
 	tool: string;
 	true_next: string | null;
 	false_next: string | null;
@@ -23,12 +32,19 @@ import type { Node } from '@xyflow/svelte';
 export type FlowNodeData = {
 	description: string;
 	name: string;
-	type: string;
+	type: NodeType;
 };
 
 export type FlowNode = Node<FlowNodeData>;
 
 export function JsonNodeToSvelteNode(json: JsonNodeData): FlowNode {
+	let nodeType: NodeType;
+	if (Object.values(NodeType).includes(json.type as NodeType)) {
+		nodeType = json.type as NodeType;
+	} else {
+		nodeType = NodeType.STEP;
+	}
+
 	return {
 		id: json.uniq_id,
 		type: 'textNode',
@@ -36,7 +52,7 @@ export function JsonNodeToSvelteNode(json: JsonNodeData): FlowNode {
 		data: {
 			name: json.name,
 			description: json.description,
-			type: json.type
+			type: nodeType
 		} as FlowNodeData,
 		position: {
 			x: json.ext.pos_x ?? 0,
@@ -51,7 +67,7 @@ export function SvelteNodeToJsonNode(node: FlowNode): JsonNodeData {
 		name: node.data.name,
 		description: node.data.description,
 		nexts: [],
-		type: node.data.type,
+		type: NodeType[node.data.type],
 		tool: '',
 		true_next: null,
 		false_next: null,

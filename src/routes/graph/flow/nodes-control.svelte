@@ -4,6 +4,7 @@
 	import { serial_number, currentNodes } from './graphs.store.svelte';
 	import type { FlowNode } from './node-schema';
 	import { screenToFlow } from '../flow/flow-position.store';
+	import { NodeType } from './node-schema';
 
 	export function AddNode(screen_x: number, screen_y: number): void {
 		// This will never be null—at worst it's our fallback that returns {0,0}
@@ -18,7 +19,7 @@
 			data: {
 				name: 'New Node',
 				description: 'Enter description here',
-				type: 'STEP'
+				type: NodeType.STEP
 			},
 			position: { x, y }
 		};
