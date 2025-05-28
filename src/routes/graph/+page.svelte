@@ -1,4 +1,4 @@
-<!-- src/routes/graph/+page.svelte -->
+<!-- routes/graph/+page.svelte -->
 <script lang="ts">
 	import { SvelteFlow, Controls, Background, MiniMap } from '@xyflow/svelte';
 	import '@xyflow/svelte/dist/style.css';
