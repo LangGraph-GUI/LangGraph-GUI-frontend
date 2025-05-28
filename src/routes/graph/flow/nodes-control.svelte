@@ -26,4 +26,8 @@
 		serial_number.set(serial + 1);
 		currentNodes.update((nodes) => [...nodes, newNode]);
 	}
+
+	export function RemoveNode(nodeId: string): void {
+		currentNodes.update((nodes) => nodes.filter((n) => n.id !== nodeId));
+	}
 </script>

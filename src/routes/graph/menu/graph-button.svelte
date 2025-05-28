@@ -1,6 +1,6 @@
 <!-- routes/graph/menu/graph-button.svelte -->
 <script lang="ts">
-	import { AddNode } from '../flow/nodes-control.svelte';
+	import { AddNode, RemoveNode } from '../flow/nodes-control.svelte';
 
 	// get child content via snippet
 	let { children } = $props();
@@ -62,7 +62,9 @@
 	}
 
 	function onRemoveNode() {
-		// TODO: implement remove node functionality
+		if (menu.elementId) {
+			RemoveNode(menu.elementId);
+		}
 		console.log(`Remove Node clicked for node ${menu.elementId}`);
 		menu = { ...menu, show: false };
 	}
