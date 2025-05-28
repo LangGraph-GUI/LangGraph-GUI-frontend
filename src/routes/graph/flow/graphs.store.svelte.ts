@@ -1,15 +1,11 @@
 // routes/graph/flow/graphs.store.svelte.ts
 import { writable, derived, get } from 'svelte/store';
-import { SvelteMap } from 'svelte/reactivity';
 import type { FlowNode } from './node-schema';
 
 /** The single source of truth for all graphs */
 export const graphs = writable<Record<string, FlowNode[]>>({});
-
-export const serial_numbers = new SvelteMap<string, number>();
-
-/** Which subgraph key is currently active */
 export const usingSubgraph = writable<string>('root');
+export const serial_number = writable<number>(1);
 
 /** Read/write store for the active graph's nodes */
 export const currentNodes = (() => {

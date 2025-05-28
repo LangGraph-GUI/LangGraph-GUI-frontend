@@ -1,7 +1,7 @@
 <!-- routes/graph/menu/graphs-io.svelte -->
 <script lang="ts" module>
 	import { get } from 'svelte/store';
-	import { graphs, usingSubgraph, serial_numbers } from '../flow/graphs.store.svelte';
+	import { graphs, usingSubgraph, serial_number } from '../flow/graphs.store.svelte';
 	import { saveJsonToFile, loadJsonFromFile } from '$lib/io/json';
 	import type { JsonNodeData, FlowNode } from '../flow/node-schema';
 	import { SvelteNodeToJsonNode, JsonNodeToSvelteNode } from '../flow/node-schema';
@@ -9,24 +9,13 @@
 	interface ExportedGraph {
 		name: string;
 		nodes: JsonNodeData[];
-		serial: number;
 	}
 
 	export async function saveGraphs(): Promise<void> {
 		const gm = get(graphs);
-
-		const serialMap = Array.from(serial_numbers.entries()).reduce<Record<string, number>>(
-			(acc, [name, sn]) => {
-				acc[name] = sn;
-				return acc;
-			},
-			{}
-		);
-
 		const out: ExportedGraph[] = Object.entries(gm).map(([name, nodes]) => ({
 			name,
-			nodes: nodes.map(SvelteNodeToJsonNode),
-			serial: serialMap[name] ?? 0
+			nodes: nodes.map(SvelteNodeToJsonNode)
 		}));
 
 		saveJsonToFile('graphs.json', out);
@@ -37,15 +26,21 @@
 			const arr = (await loadJsonFromFile()) as Array<{
 				name: string;
 				nodes: JsonNodeData[];
-				serial?: number;
 			}>;
 
 			const newMap: Record<string, FlowNode[]> = {};
-			serial_numbers.clear();
+
+			let nextId = 1;
+			arr.forEach((g) =>
+				g.nodes.forEach((n) => {
+					const num = parseInt(n.uniq_id, 10);
+					if (!isNaN(num) && num >= nextId) nextId = num + 1;
+				})
+			);
+			serial_number.set(nextId);
 
 			arr.forEach((g) => {
 				newMap[g.name] = g.nodes.map(JsonNodeToSvelteNode);
-				serial_numbers.set(g.name, g.serial ?? 1);
 			});
 
 			graphs.set(newMap);

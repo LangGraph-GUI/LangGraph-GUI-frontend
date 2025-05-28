@@ -1,7 +1,7 @@
 <!-- routes/graph/flow/nodes-control.svelte -->
 <script lang="ts" module>
 	import { get } from 'svelte/store';
-	import { usingSubgraph, serial_numbers, currentNodes } from './graphs.store.svelte';
+	import { serial_number, currentNodes } from './graphs.store.svelte';
 	import type { FlowNode } from './node-schema';
 	import { screenToFlow } from '../flow/flow-position.store';
 
@@ -10,8 +10,7 @@
 		const ScreenToFlow = get(screenToFlow);
 		const { x, y } = ScreenToFlow({ x: screen_x, y: screen_y });
 
-		const key = get(usingSubgraph);
-		const serial = serial_numbers.get(key) ?? 1;
+		const serial = get(serial_number);
 
 		const newNode: FlowNode = {
 			id: String(serial),
@@ -24,7 +23,7 @@
 			position: { x, y }
 		};
 
-		serial_numbers.set(key, serial + 1);
+		serial_number.set(serial + 1);
 		currentNodes.update((nodes) => [...nodes, newNode]);
 	}
 </script>
