@@ -6,7 +6,7 @@
 	import Sidebar from './menu/sidebar.svelte';
 	import GraphsPanel from './menu/graphs-panel.svelte';
 	import GraphButton from './menu/graph-button.svelte';
-	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
+	import { currentNodes } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 	import FlowAlgo from './flow/flow-algo.svelte';
 
@@ -32,7 +32,7 @@
 		<GraphsPanel />
 	</div>
 	<GraphButton>
-		<SvelteFlow bind:nodes={$currentNodes} bind:edges={$currentEdges} {nodeTypes} fitView>
+		<SvelteFlow bind:nodes={$currentNodes} {nodeTypes} fitView>
 			<Controls />
 			<Background />
 			<MiniMap />
@@ -47,7 +47,6 @@
 		width: 100%;
 		z-index: 10;
 	}
-
 	.content-wrapper {
 		position: absolute;
 		top: 0;
