@@ -48,16 +48,17 @@ export function JsonNodeToSvelteNode(json: JsonNodeData): FlowNode {
 	return {
 		id: json.uniq_id,
 		type: 'textNode',
-
+		position: {
+			x: json.ext.pos_x ?? 0,
+			y: json.ext.pos_y ?? 0
+		},
+		width: json.ext.width ?? 200,
+		height: json.ext.height ?? 200,
 		data: {
 			name: json.name,
 			description: json.description,
 			type: nodeType
-		} as FlowNodeData,
-		position: {
-			x: json.ext.pos_x ?? 0,
-			y: json.ext.pos_y ?? 0
-		}
+		} as FlowNodeData
 	};
 }
 
@@ -74,8 +75,8 @@ export function SvelteNodeToJsonNode(node: FlowNode): JsonNodeData {
 		ext: {
 			pos_x: node.position.x,
 			pos_y: node.position.y,
-			width: undefined,
-			height: undefined,
+			width: node.width,
+			height: node.height,
 			info: null
 		}
 	};

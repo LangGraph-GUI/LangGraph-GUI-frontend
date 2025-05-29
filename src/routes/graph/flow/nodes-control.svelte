@@ -21,7 +21,9 @@
 				description: 'Enter description here',
 				type: NodeType.STEP
 			},
-			position: { x, y }
+			position: { x, y },
+			width: 200,
+			height: 200
 		};
 
 		serial_number.set(serial + 1);
