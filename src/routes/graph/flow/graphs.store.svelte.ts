@@ -1,5 +1,6 @@
 // routes/graph/flow/graphs.store.svelte.ts
 import { writable, derived, get } from 'svelte/store';
+import type { Edge } from '@xyflow/svelte';
 import type { FlowNode } from './node-schema';
 
 // The single source of truth for all graphs
@@ -30,3 +31,42 @@ export const currentNodes = (() => {
 		}
 	};
 })();
+
+// derive edges from nodes
+export const currentEdges = derived(currentNodes, ($nodes): Edge[] => {
+	const edges: Edge[] = [];
+
+	for (const node of $nodes) {
+		// default to an empty Set if undefined
+		const nextsSet = node.data.nexts ?? new Set<string>();
+
+		// for…of is fine on a Set
+		for (const nextId of nextsSet) {
+			edges.push({
+				id: `${node.id}→${nextId}`,
+				source: node.id,
+				target: nextId
+			});
+		}
+
+		// boolean branches, if you want them:
+		if (node.data.true_next) {
+			edges.push({
+				id: `${node.id}-true→${node.data.true_next}`,
+				source: node.id,
+				sourceHandle: 'true',
+				target: node.data.true_next
+			});
+		}
+		if (node.data.false_next) {
+			edges.push({
+				id: `${node.id}-false→${node.data.false_next}`,
+				source: node.id,
+				sourceHandle: 'false',
+				target: node.data.false_next
+			});
+		}
+	}
+
+	return edges;
+});

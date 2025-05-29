@@ -6,7 +6,7 @@
 	import Sidebar from './menu/sidebar.svelte';
 	import GraphsPanel from './menu/graphs-panel.svelte';
 	import GraphButton from './menu/graph-button.svelte';
-	import { currentNodes } from './flow/graphs.store.svelte';
+	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 	import FlowAlgo from './flow/flow-algo.svelte';
 	import { CreateEdge } from './flow/graph-algo.svelte';
@@ -42,6 +42,7 @@
 		<SvelteFlow
 			onconnect={handleConnect}
 			bind:nodes={$currentNodes}
+			edges={$currentEdges}
 			{nodeTypes}
 			fitView
 		>
