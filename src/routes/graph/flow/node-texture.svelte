@@ -7,6 +7,9 @@
 
 	let { id, data, selected, width, height }: NodeProps = $props();
 	const { updateNodeData } = useSvelteFlow();
+
+	// 1. Reactive local copy of description
+	let localDescription = $state(data.description);
 </script>
 
 <div
@@ -75,21 +78,19 @@
 	<!-- DESCRIPTION -->
 	{#if data.type !== NodeType.START && data.type !== NodeType.SUBGRAPH}
 		<div class="mt-2 flex h-[calc(100%-120px)] min-h-0 flex-grow flex-col">
-			<label class="mb-1 block text-left text-sm text-gray-700" for="node-description-{id}">
+			<label for="node-description-{id}" class="mb-1 block text-left text-sm text-gray-700">
 				Description:
 			</label>
+
+			<!-- 3.1 Bind locally, update only on blur -->
 			<textarea
 				id="node-description-{id}"
-				class="h-full w-full flex-grow resize-none overflow-y-auto rounded
-             border border-gray-300 bg-white p-1
-             text-sm focus:outline-none"
-				oninput={(e) => {
-					const val = (e.currentTarget as HTMLTextAreaElement).value;
-					updateNodeData(id, { description: val });
-				}}
-			>
-				{data.description}</textarea
-			>
+				class="h-full w-full flex-grow resize-none overflow-y-auto
+               rounded border border-gray-300 bg-white p-1 text-sm
+               focus:outline-none"
+				bind:value={localDescription}
+				onblur={() => updateNodeData(id, { description: localDescription })}
+			></textarea>
 		</div>
 	{/if}
 </div>
