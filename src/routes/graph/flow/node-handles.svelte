@@ -4,40 +4,45 @@
 	import { NodeType } from './node-schema';
 
 	let { node_type = $bindable() } = $props();
+	let is_start = $derived(node_type !== NodeType.START);
+	let is_condition = $derived(node_type === NodeType.CONDITION);
+	let not_condition = $derived(!is_condition);
 </script>
 
 <!-- Target handle on left - show for all except START -->
-{#if node_type !== NodeType.START}
-	<Handle
-		id="in"
-		type="target"
-		position={Position.Left}
-		style="left: -4px; top: calc(50% - 4px); width:8px; height:8px;"
-	/>
-{/if}
+<Handle
+	id="in"
+	type="target"
+	isConnectable={is_start}
+	position={Position.Left}
+	style="visibility: {is_start ? 'visible' : 'hidden'};
+		left: -4px; top: calc(50% - 4px); width:8px; height:8px; "
+/>
 
 <!-- Source handle on right - show for all except CONDITION -->
-{#if node_type !== NodeType.CONDITION}
-	<Handle
-		id="next"
-		type="source"
-		position={Position.Right}
-		style="right: -4px; top: calc(50% - 4px); width:8px; height:8px;"
-	/>
-{/if}
+<Handle
+	id="next"
+	type="source"
+	isConnectable={not_condition}
+	position={Position.Right}
+	style="visibility: {not_condition ? 'visible' : 'hidden'};
+		right: -4px; top: calc(50% - 4px); width:8px; height:8px; "
+/>
 
 <!-- Source handle true/false - show only for CONDITION -->
-{#if node_type === NodeType.CONDITION}
-	<Handle
-		id="true"
-		type="source"
-		position={Position.Top}
-		style="background: green; top: -4px; left: calc(50% - 4px); width:8px; height:8px;"
-	/>
-	<Handle
-		id="false"
-		type="source"
-		position={Position.Bottom}
-		style="background: red; bottom: -4px; left: calc(50% - 4px); width:8px; height:8px;"
-	/>
-{/if}
+<Handle
+	id="true"
+	type="source"
+	isConnectable={is_condition}
+	position={Position.Top}
+	style="visibility: {is_condition ? 'visible' : 'hidden'}; 
+		top: -4px; left: calc(50% - 4px); width:8px; height:8px; background: green;"
+/>
+<Handle
+	id="false"
+	type="source"
+	isConnectable={is_condition}
+	position={Position.Bottom}
+	style="visibility: {is_condition ? 'visible' : 'hidden'}; 
+		bottom: -4px; left: calc(50% - 4px); width:8px; height:8px; background: red;"
+/>
