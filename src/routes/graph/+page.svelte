@@ -9,6 +9,7 @@
 	import { currentNodes } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-layout.svelte';
 	import FlowAlgo from './flow/flow-algo.svelte';
+	import { CreateEdge } from './flow/graph-algo.svelte';
 
 	// sidebar toggle
 	let menuOpen = $state(false);
@@ -20,9 +21,9 @@
 	let contentOffset = $derived(menuOpen ? 200 : 0);
 
 	const handleConnect: OnConnect = (e) => {
-		//const conn = e as any;
-		console.log('source:', e.source);
-		console.log('target:', e.target);
+		if (e.sourceHandle != null) {
+			CreateEdge(e.source, e.sourceHandle, e.target);
+		}
 	};
 
 	// custom node types
@@ -38,7 +39,12 @@
 		<GraphsPanel />
 	</div>
 	<GraphButton>
-		<SvelteFlow onconnect={handleConnect} bind:nodes={$currentNodes} {nodeTypes} fitView>
+		<SvelteFlow
+			onconnect={handleConnect}
+			bind:nodes={$currentNodes}
+			{nodeTypes}
+			fitView
+		>
 			<Controls />
 			<Background />
 			<MiniMap />

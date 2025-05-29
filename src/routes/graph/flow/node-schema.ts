@@ -32,6 +32,9 @@ export type FlowNodeData = {
 	description: string;
 	name: string;
 	type: NodeType;
+	nexts: Set<string>;
+	true_next: string | null;
+	false_next: string | null;
 };
 
 export type FlowNode = Node<FlowNodeData>;
@@ -56,21 +59,25 @@ export function JsonNodeToSvelteNode(json: JsonNodeData): FlowNode {
 		data: {
 			name: json.name,
 			description: json.description,
-			type: nodeType
+			type: nodeType,
+			nexts: new Set(json.nexts),
+			true_next: json.true_next,
+			false_next: json.false_next
 		} as FlowNodeData
 	};
 }
 
 export function SvelteNodeToJsonNode(node: FlowNode): JsonNodeData {
+	const nextsSet = node.data.nexts ?? new Set<string>();
 	return {
 		uniq_id: node.id,
 		name: node.data.name,
 		description: node.data.description,
-		nexts: [],
+		nexts: Array.from(nextsSet),
 		type: NodeType[node.data.type],
 		tool: '',
-		true_next: null,
-		false_next: null,
+		true_next: node.data.true_next,
+		false_next: node.data.false_next,
 		ext: {
 			pos_x: node.position.x,
 			pos_y: node.position.y,
