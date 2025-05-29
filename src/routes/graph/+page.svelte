@@ -7,7 +7,7 @@
 	import GraphsPanel from './menu/graphs-panel.svelte';
 	import GraphButton from './menu/graph-button.svelte';
 	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
-	import NodeLayout from './flow/node-layout.svelte';
+	import NodeLayout from './flow/node-texture.svelte';
 	import FlowAlgo from './flow/flow-algo.svelte';
 	import { CreateEdge } from './flow/graph-algo.svelte';
 

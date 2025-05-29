@@ -19,11 +19,14 @@
 			data: {
 				name: 'New Node',
 				description: 'Enter description here',
-				type: NodeType.STEP
+				type: NodeType.STEP,
+				nexts: new Set<string>(),
+				true_next: null,
+				false_next: null
 			},
 			position: { x, y },
-			width: 200,
-			height: 200
+			width: 280,
+			height: 280
 		};
 
 		serial_number.set(serial + 1);
