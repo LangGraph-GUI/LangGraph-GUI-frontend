@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { saveGraphs, loadGraphs } from '../flow/graphs-io.svelte';
 	import { graphs, usingSubgraph } from '../flow/graphs.store.svelte';
+	import { addSubGraph, renameSubGraph, removeSubGraph } from '../flow/graphs-algo.svelte';
 
 	let isGraphsMenuOpen = $state(false);
 	let graphsMenuRef: HTMLDivElement;
@@ -11,21 +12,18 @@
 	let isSubGraphMenuOpen = $state(false);
 	let subGraphMenuRef: HTMLDivElement;
 
-	// Dummy data for subgraphs (replace with your actual data)
-	let currentGraphName = 'root';
-
 	const handleAddSubGraph = () => {
-		// Implement your logic here (currently does nothing)
+		addSubGraph();
 		closeMenus();
 	};
 
-	const handleRenameGraph = () => {
-		// Implement your logic here (currently does nothing)
+	const handleRenameSubGraph = () => {
+		renameSubGraph();
 		closeMenus();
 	};
 
-	const handleRemoveGraph = () => {
-		// Implement your logic here (currently does nothing)
+	const handleRemoveSubGraph = () => {
+		removeSubGraph();
 		closeMenus();
 	};
 
@@ -158,11 +156,11 @@
 				<button class="block w-full px-4 py-2 text-left" onclick={handleSaveSubGraph}
 					>Save Subgraph</button
 				>
-				{#if currentGraphName !== 'root'}
-					<button class="block w-full px-4 py-2 text-left" onclick={handleRenameGraph}
+				{#if $usingSubgraph !== 'root'}
+					<button class="block w-full px-4 py-2 text-left" onclick={handleRenameSubGraph}
 						>Rename Subgraph</button
 					>
-					<button class="block w-full px-4 py-2 text-left" onclick={handleRemoveGraph}
+					<button class="block w-full px-4 py-2 text-left" onclick={handleRemoveSubGraph}
 						>Remove Subgraph</button
 					>
 				{/if}
