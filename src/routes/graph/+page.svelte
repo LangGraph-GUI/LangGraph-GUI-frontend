@@ -1,6 +1,6 @@
 <!-- routes/graph/+page.svelte -->
 <script lang="ts">
-	import { SvelteFlow, Controls, Background, MiniMap } from '@xyflow/svelte';
+	import { SvelteFlow, Controls, Background, MiniMap, type OnConnect } from '@xyflow/svelte';
 	import '@xyflow/svelte/dist/style.css';
 
 	import Sidebar from './menu/sidebar.svelte';
@@ -19,6 +19,12 @@
 	// slide offset when sidebar open
 	let contentOffset = $derived(menuOpen ? 200 : 0);
 
+	const handleConnect: OnConnect = (e) => {
+		//const conn = e as any;
+		console.log('source:', e.source);
+		console.log('target:', e.target);
+	};
+
 	// custom node types
 	const nodeTypes = {
 		textNode: NodeLayout
@@ -32,7 +38,7 @@
 		<GraphsPanel />
 	</div>
 	<GraphButton>
-		<SvelteFlow bind:nodes={$currentNodes} {nodeTypes} fitView>
+		<SvelteFlow onconnect={handleConnect} bind:nodes={$currentNodes} {nodeTypes} fitView>
 			<Controls />
 			<Background />
 			<MiniMap />
