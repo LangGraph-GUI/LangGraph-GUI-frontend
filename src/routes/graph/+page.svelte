@@ -44,7 +44,7 @@
 <style>
 	.panel-container {
 		position: absolute;
-		width: 100%;
+		left: calc(50% - 200px);
 		z-index: 10;
 	}
 	.content-wrapper {
@@ -52,7 +52,7 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: calc(100vh - 50px);
+		height: calc(100vh - 20px);
 		transition: transform 0.3s ease;
 	}
 </style>
