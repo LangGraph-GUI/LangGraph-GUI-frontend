@@ -7,7 +7,6 @@ export const graphs = writable<Record<string, FlowNode[]>>({});
 export const usingSubgraph = writable<string>('root');
 export const serial_number = writable<number>(1);
 
-
 export const currentNodes = (() => {
 	const slice = derived([graphs, usingSubgraph], ([$graphs, $using]) => $graphs[$using] ?? []);
 

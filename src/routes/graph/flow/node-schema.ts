@@ -23,7 +23,6 @@ export interface JsonNodeData {
 		pos_y?: number;
 		width?: number;
 		height?: number;
-		info?: string | null;
 	};
 }
 
@@ -76,8 +75,7 @@ export function SvelteNodeToJsonNode(node: FlowNode): JsonNodeData {
 			pos_x: node.position.x,
 			pos_y: node.position.y,
 			width: node.width,
-			height: node.height,
-			info: null
+			height: node.height
 		}
 	};
 }

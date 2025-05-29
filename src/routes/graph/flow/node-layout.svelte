@@ -14,7 +14,9 @@
 	style="width: {width}px; height: {height}px;"
 >
 	<NodeResizer minWidth={150} minHeight={100} isVisible={selected} color="rgb(255,64,0)" />
-	<NodeHandles />
+
+	<!-- Pass the node type to the handles component -->
+	<NodeHandles node_type={data.type} />
 
 	<!-- TYPE DROPDOWN -->
 	<div class="mt-2">
@@ -28,7 +30,7 @@
 				updateNodeData(id, { type: newType });
 			}}
 		>
-			{#each Object.values(NodeType) as type}
+			{#each Object.values(NodeType) as type (type)}
 				<option value={type} selected={type === data.type}>
 					{type}
 				</option>
