@@ -45,7 +45,8 @@ export const currentEdges = derived(currentNodes, ($nodes): Edge[] => {
 			edges.push({
 				id: `${node.id}→${nextId}`,
 				source: node.id,
-				target: nextId
+				target: nextId,
+				style: 'stroke-width: 4px;'
 			});
 		}
 
@@ -55,7 +56,8 @@ export const currentEdges = derived(currentNodes, ($nodes): Edge[] => {
 				id: `${node.id}-true→${node.data.true_next}`,
 				source: node.id,
 				sourceHandle: 'true',
-				target: node.data.true_next
+				target: node.data.true_next,
+				style: 'stroke-width: 4px; stroke: green; '
 			});
 		}
 		if (node.data.false_next) {
@@ -63,7 +65,8 @@ export const currentEdges = derived(currentNodes, ($nodes): Edge[] => {
 				id: `${node.id}-false→${node.data.false_next}`,
 				source: node.id,
 				sourceHandle: 'false',
-				target: node.data.false_next
+				target: node.data.false_next,
+				style: 'stroke-width: 4px; stroke: red;'
 			});
 		}
 	}
