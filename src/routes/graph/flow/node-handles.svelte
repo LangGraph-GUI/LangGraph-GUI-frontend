@@ -26,7 +26,7 @@
 	/>
 {/if}
 
-<!-- Source handle on top (true) - show only for CONDITION -->
+<!-- Source handle true/false - show only for CONDITION -->
 {#if node_type === NodeType.CONDITION}
 	<Handle
 		id="true"
@@ -34,10 +34,6 @@
 		position={Position.Top}
 		style="background: green; top: -4px; left: calc(50% - 4px); width:8px; height:8px;"
 	/>
-{/if}
-
-<!-- Source handle on bottom (false) - show only for CONDITION -->
-{#if node_type === NodeType.CONDITION}
 	<Handle
 		id="false"
 		type="source"
