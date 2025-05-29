@@ -7,7 +7,6 @@
 	const { screenToFlowPosition } = useSvelteFlow();
 
 	onMount(() => {
-		// Replace the zero-return stub with the real converter
 		screenToFlow.set(screenToFlowPosition);
 	});
 </script>

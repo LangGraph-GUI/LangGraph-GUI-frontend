@@ -2,14 +2,13 @@
 import { writable, derived, get } from 'svelte/store';
 import type { FlowNode } from './node-schema';
 
-/** The single source of truth for all graphs */
+// The single source of truth for all graphs
 export const graphs = writable<Record<string, FlowNode[]>>({});
 export const usingSubgraph = writable<string>('root');
 export const serial_number = writable<number>(1);
 
-/** Read/write store for the active graph's nodes */
+
 export const currentNodes = (() => {
-	// a derived slice of graphs[usingSubgraph]
 	const slice = derived([graphs, usingSubgraph], ([$graphs, $using]) => $graphs[$using] ?? []);
 
 	return {
