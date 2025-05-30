@@ -1,9 +1,11 @@
-# LangGraph-GUI-svelte
+# LangGraph-GUI-svelte [LangGraph-GUI](https://github.com/LangGraph-GUI/LangGraph-GUI)
 
 ## See [LangGraph-GUI](https://github.com/LangGraph-GUI/LangGraph-GUI)
 
 
-## core design concept
+## 
+
+### core design concept
 
 SSOT is Nodes, singals to Edges
 ```
