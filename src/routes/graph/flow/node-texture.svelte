@@ -20,6 +20,23 @@
 
 	<NodeHandles node_type={data.type} />
 
+	<!-- NAME INPUT -->
+	{#if data.type !== NodeType.START && data.type !== NodeType.TOOL}
+		<div class="mt-2 flex items-center space-x-2">
+			<label for="node-name-{id}" class="text-left text-sm text-gray-700"> Name: </label>
+			<input
+				id="node-name-{id}"
+				type="text"
+				class="w-full bg-white p-1 text-sm focus:outline-none"
+				value={data.name}
+				oninput={(e) => {
+					const val = (e.currentTarget as HTMLInputElement).value;
+					updateNodeData(id, { name: val });
+				}}
+			/>
+		</div>
+	{/if}
+
 	<!-- TYPE DROPDOWN -->
 	<div class="mt-2 flex items-center space-x-2">
 		<label for="node-type-{id}" class="text-sm text-gray-700"> Type: </label>
@@ -39,23 +56,6 @@
 			{/each}
 		</select>
 	</div>
-
-	<!-- NAME INPUT -->
-	{#if data.type !== NodeType.START && data.type !== NodeType.TOOL}
-		<div class="mt-2 flex items-center space-x-2">
-			<label for="node-name-{id}" class="text-left text-sm text-gray-700"> Name: </label>
-			<input
-				id="node-name-{id}"
-				type="text"
-				class="w-full bg-white p-1 text-sm focus:outline-none"
-				value={data.name}
-				oninput={(e) => {
-					const val = (e.currentTarget as HTMLInputElement).value;
-					updateNodeData(id, { name: val });
-				}}
-			/>
-		</div>
-	{/if}
 
 	<!-- TOOL INPUT -->
 	{#if data.type === NodeType.STEP}

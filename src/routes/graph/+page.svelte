@@ -12,14 +12,14 @@
 	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-texture.svelte';
 	import FlowAlgo from './flow/flow-algo.svelte';
-	import { CreateEdge } from './flow/graph-algo.svelte';
+	import { AddEdge } from './flow/graph-algo.svelte';
 
 	// slide offset when sidebar open
 	let contentOffset = $derived($openSidebar ? 200 : 0);
 
 	const handleConnect: OnConnect = (e) => {
 		if (e.sourceHandle != null) {
-			CreateEdge(e.source, e.sourceHandle, e.target);
+			AddEdge(e.source, e.sourceHandle, e.target);
 		}
 	};
 

@@ -1,6 +1,6 @@
 <!-- routes/graph/menu/graph-button.svelte -->
 <script lang="ts">
-	import { AddNode, RemoveNode } from '../flow/nodes-control.svelte';
+	import { AddNode, RemoveNode } from '../flow/graph-algo.svelte';
 
 	// get child content via snippet
 	let { children } = $props();
