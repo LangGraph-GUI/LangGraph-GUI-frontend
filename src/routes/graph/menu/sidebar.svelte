@@ -1,7 +1,6 @@
 <!-- routes/graph/menu/sidebar.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { handleUpload } from './FileTransmit.svelte';
+	import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit.svelte';
 
 	// rune-mode props
 	const { open, onToggle } = $props<{
@@ -9,19 +8,25 @@
 		onToggle: () => void;
 	}>();
 
-	// grab your VITE_BACKEND_URL (optional logging)
-	const backendUrl = import.meta.env.VITE_BACKEND_URL;
-	onMount(() => {
-		console.log('VITE_BACKEND_URL →', backendUrl);
-	});
-
-	// reference to the hidden file <input>
+	// file-input ref for uploads
 	let fileInput: HTMLInputElement;
 
-	/** Prevent the default link behavior and open the file dialog */
-	function triggerFileDialog(event: MouseEvent) {
-		event.preventDefault();
+	// open file dialog
+	function triggerFileDialog(e: MouseEvent) {
+		e.preventDefault();
 		fileInput.click();
+	}
+
+	// download workspace ZIP
+	function triggerDownload(e: MouseEvent) {
+		e.preventDefault();
+		handleDownload();
+	}
+
+	// clean server cache
+	function triggerCleanCache(e: MouseEvent) {
+		e.preventDefault();
+		handleCleanCache();
 	}
 </script>
 
@@ -35,19 +40,28 @@
 	>
 
 	<nav class="p-4">
-		<ul class="list-none">
-			<li class="mb-2">
-				<!-- clicking this will open the file picker -->
-				<a href="file-upload" onclick={triggerFileDialog} class="text-blue-600 hover:underline">
+		<ul class="list-none space-y-2">
+			<!-- Upload -->
+			<li>
+				<a href="upload" onclick={triggerFileDialog} class="text-blue-600 hover:underline">
 					File Upload
 				</a>
-
-				<!-- hidden file input that actually does the work -->
 				<input type="file" multiple bind:this={fileInput} onchange={handleUpload} class="hidden" />
 			</li>
-			<li class="mb-2"><a href="#item2">Menu item 2</a></li>
-			<li class="mb-2"><a href="#item3">Menu item 3</a></li>
-			<li class="mb-2"><a href="#item4">Menu item 4</a></li>
+
+			<!-- Download -->
+			<li>
+				<a href="download" onclick={triggerDownload} class="text-blue-600 hover:underline">
+					Download Workspace
+				</a>
+			</li>
+
+			<!-- Clean Cache -->
+			<li>
+				<a href="clean" onclick={triggerCleanCache} class="text-blue-600 hover:underline">
+					Clean Cache
+				</a>
+			</li>
 		</ul>
 	</nav>
 </div>

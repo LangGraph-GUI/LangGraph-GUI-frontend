@@ -1,26 +1,19 @@
-<!-- src/routes/graph/menu/FileTransmit.svelte -->
+<!-- routes/graph/menu/FileTransmit.svelte -->
 <script lang="ts" module>
 	import { username } from './user-info.store';
 	import { get } from 'svelte/store';
 
 	const SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
-	/**
-	 * Uploads the selected files under the current username.
-	 * If no files are picked or the username is still 'unknown',
-	 * it alerts the user and bails out.
-	 */
+	/** Upload selected files */
 	export async function handleUpload(event: Event) {
-		// Grab the FileList from the input event
 		const files = (event.target as HTMLInputElement).files;
-		// Read the current username from the store
 		const user = get(username);
 
-		if (!files || files.length === 0) {
+		if (!files?.length) {
 			alert('No files selected for upload.');
 			return;
 		}
-
 		const formData = new FormData();
 		for (const file of Array.from(files)) {
 			formData.append('files', file);
@@ -31,7 +24,6 @@
 				method: 'POST',
 				body: formData
 			});
-
 			if (res.ok) {
 				alert('Files successfully uploaded');
 			} else {
@@ -42,6 +34,44 @@
 			alert('Upload failed: ' + err);
 		}
 	}
-</script>
 
-<input type="file" multiple onchange={handleUpload} />
+	/** Trigger a workspace ZIP download */
+	export async function handleDownload() {
+		const user = get(username);
+		try {
+			const res = await fetch(`${SERVER_URL}/download/${encodeURIComponent(user)}`);
+			if (res.ok) {
+				const blob = await res.blob();
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `${user}_workspace.zip`;
+				a.click();
+				URL.revokeObjectURL(url);
+			} else {
+				const err = await res.json();
+				alert('Download failed: ' + err.error);
+			}
+		} catch (err) {
+			alert('Download failed: ' + err);
+		}
+	}
+
+	/** Clean the user’s server-side cache */
+	export async function handleCleanCache() {
+		const user = get(username);
+		try {
+			const res = await fetch(`${SERVER_URL}/clean-cache/${encodeURIComponent(user)}`, {
+				method: 'POST'
+			});
+			if (res.ok) {
+				alert('Cache successfully cleaned');
+			} else {
+				const err = await res.json();
+				alert('Clean cache failed: ' + err.error);
+			}
+		} catch (err) {
+			alert('Clean cache failed: ' + err);
+		}
+	}
+</script>
