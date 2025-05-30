@@ -1,7 +1,7 @@
 <!-- routes/graph/menu/sidebar.svelte -->
 <script lang="ts">
 	import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit.svelte';
-	import { openRunWindow, openSidebar } from './menu.store';
+	import { openRunWindow, openSidebar, openConfigWindow } from './menu.store';
 
 	let fileInput: HTMLInputElement;
 
@@ -27,10 +27,14 @@
 		handleCleanCache();
 	}
 
-	// **NEW**: open the RunWindow popup
 	function triggerRun(e: MouseEvent) {
 		e.preventDefault();
 		openRunWindow.set(true);
+	}
+
+	function triggerConfig(e: MouseEvent) {
+		e.preventDefault();
+		openConfigWindow.set(true);
 	}
 </script>
 
@@ -67,9 +71,15 @@
 					Clean Cache
 				</a>
 			</li>
-			<!-- Your new Run button -->
+
+			<!-- Run Window -->
 			<li>
 				<a href="run" onclick={triggerRun} class="text-blue-600 hover:underline"> Run </a>
+			</li>
+
+			<!-- Config Window -->
+			<li>
+				<a href="run" onclick={triggerConfig} class="text-blue-600 hover:underline"> Config </a>
 			</li>
 		</ul>
 	</nav>

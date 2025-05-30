@@ -3,11 +3,12 @@
 	import { SvelteFlow, Controls, Background, MiniMap, type OnConnect } from '@xyflow/svelte';
 	import '@xyflow/svelte/dist/style.css';
 
-	import Sidebar from './menu/sidebar.svelte';
-	import RunWindow from './menu/RunWindow.svelte';
+	import MenuSidebar from './menu/sidebar.svelte';
+	import MenuConfigWindow from './menu/ConfigWindow.svelte';
+	import MenuRunWindow from './menu/RunWindow.svelte';
 	import { openSidebar } from './menu/menu.store';
-	import GraphsPanel from './menu/graphs-panel.svelte';
-	import GraphButton from './menu/graph-button.svelte';
+	import MenuGraphsPanel from './menu/graphs-panel.svelte';
+	import MenuGraphButton from './menu/graph-button.svelte';
 
 	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-texture.svelte';
@@ -29,14 +30,15 @@
 	};
 </script>
 
-<Sidebar />
-<RunWindow />
+<MenuSidebar />
+<MenuRunWindow />
+<MenuConfigWindow />
 
 <div class="content-wrapper" style="transform: translateX({contentOffset}px)">
 	<div class="panel-container">
-		<GraphsPanel />
+		<MenuGraphsPanel />
 	</div>
-	<GraphButton>
+	<MenuGraphButton>
 		<SvelteFlow
 			onconnect={handleConnect}
 			bind:nodes={$currentNodes}
@@ -49,13 +51,13 @@
 			<MiniMap />
 			<FlowAlgo />
 		</SvelteFlow>
-	</GraphButton>
+	</MenuGraphButton>
 </div>
 
 <style>
 	.panel-container {
 		position: absolute;
-		left: calc(50% - 200px);
+		left: calc(50% - 180px);
 		z-index: 10;
 	}
 	.content-wrapper {
