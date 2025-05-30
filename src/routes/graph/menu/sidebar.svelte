@@ -1,66 +1,53 @@
 <!-- routes/graph/menu/sidebar.svelte -->
 <script lang="ts">
-	// Receive the open state and a toggle callback from the parent
-	// In runes mode, use $props() instead of export let
+	import { onMount } from 'svelte';
+	import { handleUpload } from './FileTransmit.svelte';
+
+	// rune-mode props
 	const { open, onToggle } = $props<{
 		open: boolean;
 		onToggle: () => void;
 	}>();
+
+	// grab your VITE_BACKEND_URL (optional logging)
+	const backendUrl = import.meta.env.VITE_BACKEND_URL;
+	onMount(() => {
+		console.log('VITE_BACKEND_URL →', backendUrl);
+	});
+
+	// reference to the hidden file <input>
+	let fileInput: HTMLInputElement;
+
+	/** Prevent the default link behavior and open the file dialog */
+	function triggerFileDialog(event: MouseEvent) {
+		event.preventDefault();
+		fileInput.click();
+	}
 </script>
 
-<div class="sidebar {open ? 'open' : ''}">
-	<!-- In runes mode, use the standard HTML onclick attribute -->
-	<button class="toggle-btn" onclick={onToggle}>☰</button>
-	<nav>
-		<ul>
-			<li><a href="#item1">Menu item 1</a></li>
-			<li><a href="#item2">Menu item 2</a></li>
-			<li><a href="#item3">Menu item 3</a></li>
+<div
+	class={`fixed top-0 left-0 z-10 h-full w-52 transform bg-white shadow-lg
+    transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'}`}
+>
+	<button
+		class="absolute top-4 -right-10 h-10 w-10 cursor-pointer rounded-l-md border border-gray-300 bg-white text-2xl leading-none"
+		onclick={onToggle}>☰</button
+	>
+
+	<nav class="p-4">
+		<ul class="list-none">
+			<li class="mb-2">
+				<!-- clicking this will open the file picker -->
+				<a href="file-upload" onclick={triggerFileDialog} class="text-blue-600 hover:underline">
+					File Upload
+				</a>
+
+				<!-- hidden file input that actually does the work -->
+				<input type="file" multiple bind:this={fileInput} onchange={handleUpload} class="hidden" />
+			</li>
+			<li class="mb-2"><a href="#item2">Menu item 2</a></li>
+			<li class="mb-2"><a href="#item3">Menu item 3</a></li>
+			<li class="mb-2"><a href="#item4">Menu item 4</a></li>
 		</ul>
 	</nav>
 </div>
-
-<style>
-	.sidebar {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 200px;
-		height: 100%;
-		background: #fff;
-		box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-		transform: translateX(-200px);
-		transition: transform 0.3s ease;
-		z-index: 10;
-	}
-	.sidebar.open {
-		transform: translateX(0);
-	}
-	.toggle-btn {
-		position: absolute;
-		top: 16px;
-		right: -40px;
-		width: 40px;
-		height: 40px;
-		background: #fff;
-		border: 1px solid #ccc;
-		border-radius: 4px 0 0 4px;
-		font-size: 24px;
-		line-height: 1;
-		cursor: pointer;
-	}
-	nav ul {
-		list-style: none;
-		padding: 1rem;
-	}
-	nav li + li {
-		margin-top: 0.5rem;
-	}
-	button {
-		cursor: pointer; /* Makes the button appear clickable */
-		padding: 0.5rem 1rem; /* Adds some padding for better appearance */
-		border: 1px solid #ccc; /* Optional: Adds a border */
-		border-radius: 4px; /* Optional: Rounds the corners */
-		background-color: #f0f0f0; /* Optional:  A subtle background color */
-	}
-</style>
