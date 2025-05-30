@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
             allowedHosts: [
                 'localhost',
                 '127.0.0.1',
-                'langgraph-gui.posetmage.com',
+                'yourdomain.com',
             ],
 		},
 		define: {
