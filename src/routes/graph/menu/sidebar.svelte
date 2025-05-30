@@ -1,46 +1,51 @@
 <!-- routes/graph/menu/sidebar.svelte -->
 <script lang="ts">
 	import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit.svelte';
+	import { openRunWindow, openSidebar } from './menu.store';
 
-	// rune-mode props
-	const { open, onToggle } = $props<{
-		open: boolean;
-		onToggle: () => void;
-	}>();
-
-	// file-input ref for uploads
 	let fileInput: HTMLInputElement;
 
-	// open file dialog
+	let contentOffset = $derived($openSidebar ? 0 : -200);
+
+	function toggleMenu(e: MouseEvent) {
+		e.preventDefault();
+		openSidebar.update((v) => !v);
+	}
+
 	function triggerFileDialog(e: MouseEvent) {
 		e.preventDefault();
 		fileInput.click();
 	}
 
-	// download workspace ZIP
 	function triggerDownload(e: MouseEvent) {
 		e.preventDefault();
 		handleDownload();
 	}
 
-	// clean server cache
 	function triggerCleanCache(e: MouseEvent) {
 		e.preventDefault();
 		handleCleanCache();
 	}
+
+	// **NEW**: open the RunWindow popup
+	function triggerRun(e: MouseEvent) {
+		e.preventDefault();
+		openRunWindow.set(true);
+	}
 </script>
 
 <div
-	class={`fixed top-0 left-0 z-10 h-full w-52 transform bg-white shadow-lg
-    transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'}`}
+	class="fixed top-0 left-0 z-10 h-full w-52 transform bg-white shadow-lg
+    transition-transform duration-300 ease-in-out"
+	style="transform: translateX({contentOffset}px)"
 >
 	<button
 		class="absolute top-4 -right-10 h-10 w-10 cursor-pointer rounded-l-md border border-gray-300 bg-white text-2xl leading-none"
-		onclick={onToggle}>☰</button
+		onclick={toggleMenu}>☰</button
 	>
 
 	<nav class="p-4">
-		<ul class="list-none space-y-2">
+		<ul class="space-y-2">
 			<!-- Upload -->
 			<li>
 				<a href="upload" onclick={triggerFileDialog} class="text-blue-600 hover:underline">
@@ -61,6 +66,10 @@
 				<a href="clean" onclick={triggerCleanCache} class="text-blue-600 hover:underline">
 					Clean Cache
 				</a>
+			</li>
+			<!-- Your new Run button -->
+			<li>
+				<a href="run" onclick={triggerRun} class="text-blue-600 hover:underline"> Run </a>
 			</li>
 		</ul>
 	</nav>

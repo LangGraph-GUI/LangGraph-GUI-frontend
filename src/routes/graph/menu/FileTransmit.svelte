@@ -1,6 +1,6 @@
 <!-- routes/graph/menu/FileTransmit.svelte -->
 <script lang="ts" module>
-	import { username } from './user-info.store';
+	import { username } from './menu.store';
 	import { get } from 'svelte/store';
 
 	const SERVER_URL = import.meta.env.VITE_BACKEND_URL;

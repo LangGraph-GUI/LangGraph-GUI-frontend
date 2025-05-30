@@ -4,21 +4,18 @@
 	import '@xyflow/svelte/dist/style.css';
 
 	import Sidebar from './menu/sidebar.svelte';
+	import RunWindow from './menu/RunWindow.svelte';
+	import { openSidebar } from './menu/menu.store';
 	import GraphsPanel from './menu/graphs-panel.svelte';
 	import GraphButton from './menu/graph-button.svelte';
+
 	import { currentNodes, currentEdges } from './flow/graphs.store.svelte';
 	import NodeLayout from './flow/node-texture.svelte';
 	import FlowAlgo from './flow/flow-algo.svelte';
 	import { CreateEdge } from './flow/graph-algo.svelte';
 
-	// sidebar toggle
-	let menuOpen = $state(false);
-	function toggleMenu() {
-		menuOpen = !menuOpen;
-	}
-
 	// slide offset when sidebar open
-	let contentOffset = $derived(menuOpen ? 200 : 0);
+	let contentOffset = $derived($openSidebar ? 200 : 0);
 
 	const handleConnect: OnConnect = (e) => {
 		if (e.sourceHandle != null) {
@@ -32,7 +29,8 @@
 	};
 </script>
 
-<Sidebar open={menuOpen} onToggle={toggleMenu} />
+<Sidebar />
+<RunWindow />
 
 <div class="content-wrapper" style="transform: translateX({contentOffset}px)">
 	<div class="panel-container">
