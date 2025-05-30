@@ -43,7 +43,7 @@ export const currentEdges = derived(currentNodes, ($nodes): Edge[] => {
 		// for…of is fine on a Set
 		for (const nextId of nextsSet) {
 			edges.push({
-				id: `${node.id}→${nextId}`,
+				id: `xy-edge-${node.id}→${nextId}`,
 				source: node.id,
 				target: nextId,
 				style: 'stroke-width: 4px;'
@@ -53,7 +53,7 @@ export const currentEdges = derived(currentNodes, ($nodes): Edge[] => {
 		// boolean branches, if you want them:
 		if (node.data.true_next) {
 			edges.push({
-				id: `${node.id}-true→${node.data.true_next}`,
+				id: `xy-edge-${node.id}-true→${node.data.true_next}`,
 				source: node.id,
 				sourceHandle: 'true',
 				target: node.data.true_next,
@@ -62,7 +62,7 @@ export const currentEdges = derived(currentNodes, ($nodes): Edge[] => {
 		}
 		if (node.data.false_next) {
 			edges.push({
-				id: `${node.id}-false→${node.data.false_next}`,
+				id: `xy-edge-${node.id}-false→${node.data.false_next}`,
 				source: node.id,
 				sourceHandle: 'false',
 				target: node.data.false_next,

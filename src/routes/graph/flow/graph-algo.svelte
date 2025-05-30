@@ -67,7 +67,28 @@
 		currentNodes.update((nodes) => nodes.filter((n) => n.id !== nodeId));
 	}
 
-	export function RemoveEdge(edgeId: string): void {
-		// TODO imp this
+	export function RemoveEdge(sourceHandle: string | null, source: string, target: string): void {
+		currentNodes.update((nodes) =>
+			nodes.map((node) => {
+				if (node.id !== source) return node;
+
+				// clone so Svelte sees the update
+				const updated: FlowNode = {
+					...node,
+					data: { ...node.data, nexts: new Set(node.data.nexts) }
+				};
+
+				if (sourceHandle === null) {
+					// remove from the Set<string>
+					updated.data.nexts.delete(target);
+				} else if (sourceHandle === 'true') {
+					updated.data.true_next = null;
+				} else if (sourceHandle === 'false') {
+					updated.data.false_next = null;
+				}
+
+				return updated;
+			})
+		);
 	}
 </script>

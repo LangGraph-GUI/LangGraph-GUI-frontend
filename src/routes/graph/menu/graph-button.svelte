@@ -1,7 +1,8 @@
 <!-- routes/graph/menu/graph-button.svelte -->
 <script lang="ts">
-	import { AddNode, RemoveNode } from '../flow/graph-algo.svelte';
-
+	import { get } from 'svelte/store';
+	import { AddNode, RemoveNode, RemoveEdge } from '../flow/graph-algo.svelte';
+	import { currentEdges } from '../flow/graphs.store.svelte';
 	// get child content via snippet
 	let { children } = $props();
 	let menu = $state<{
@@ -57,7 +58,6 @@
 
 	function onAddNode() {
 		AddNode(menu.x, menu.y);
-		console.log('Add Node clicked');
 		menu = { ...menu, show: false };
 	}
 
@@ -65,13 +65,24 @@
 		if (menu.elementId) {
 			RemoveNode(menu.elementId);
 		}
-		console.log(`Remove Node clicked for node ${menu.elementId}`);
 		menu = { ...menu, show: false };
 	}
 
 	function onRemoveEdge() {
-		// TODO: implement remove edge functionality
-		console.log(`Remove Edge clicked for edge ${menu.elementId}`);
+		if (!menu.elementId) {
+			console.warn('onRemoveEdge: no menu.elementId set');
+			menu = { ...menu, show: false };
+			return;
+		}
+		const clickedId = menu.elementId;
+		const edges = get(currentEdges);
+		const edgeObj = edges.find((e) => e.id === clickedId);
+
+		if (edgeObj) {
+			// Use the actual object instead of string parsing:
+			const handle = edgeObj.sourceHandle ?? null; // undefined → null
+			RemoveEdge(handle, edgeObj.source, edgeObj.target);
+		}
 		menu = { ...menu, show: false };
 	}
 
