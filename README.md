@@ -1,6 +1,6 @@
 # LangGraph-GUI-svelte
 
-see [LangGraph-GUI](https://github.com/LangGraph-GUI/LangGraph-GUI)
+<p style="font-size: 4em;">see [LangGraph-GUI](https://github.com/LangGraph-GUI/LangGraph-GUI)</p>
 
 
 ## core design concept
