@@ -1,7 +1,6 @@
 <!-- src/routes/graph/menu/RunWindow.svelte -->
 <script lang="ts">
-	import { openRunWindow, username } from './menu.store';
-
+	import { openRunWindow, username, llmModel, apiKey } from './menu.store';
 	import { get } from 'svelte/store';
 	import { graphs } from '../flow/graphs.store.svelte';
 
@@ -14,9 +13,10 @@
 	let isRunning = $state(false);
 	let responseMessage = $state('');
 
-	// stub handlers
 	async function handleRun() {
 		isRunning = true;
+		responseMessage = '';
+
 		try {
 			// 1. serialize your graphs
 			const gm = get(graphs);
@@ -35,7 +35,7 @@
 
 			// 4. POST to your existing upload endpoint
 			const user = get(username);
-			const res = await fetch(`${SERVER_URL}/upload/${encodeURIComponent(user)}`, {
+			let res = await fetch(`${SERVER_URL}/upload/${encodeURIComponent(user)}`, {
 				method: 'POST',
 				body: formData
 			});
@@ -46,13 +46,51 @@
 				try {
 					const err = await res.json();
 					errMsg = err.error || errMsg;
-				} catch {}
-				responseMessage = `Run failed: ${errMsg}`;
-			} else {
-				responseMessage = 'Workflow successfully sent!';
+				} catch (err) {
+					responseMessage = err instanceof Error ? err.message : `${err}`;
+				}
+				throw new Error(`Upload failed: ${errMsg}`);
 			}
+
+			// 5. now call /run with JSON payload
+			const payload = {
+				username: user,
+				llm_model: get(llmModel),
+				api_key: get(apiKey)
+			};
+
+			res = await fetch(`${SERVER_URL}/run/${encodeURIComponent(user)}`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload)
+			});
+
+			if (!res.ok || !res.body) {
+				const text = await res.text();
+				throw new Error(`Run failed: ${text || res.statusText}`);
+			}
+
+			// 6. stream the response
+			const reader = res.body.getReader();
+			const decoder = new TextDecoder();
+			let done = false;
+			let buffer = '';
+
+			while (!done) {
+				const { value, done: doneReading } = await reader.read();
+				done = doneReading;
+				if (value) {
+					buffer += decoder.decode(value, { stream: true });
+					// update UI as chunks arrive
+					responseMessage = buffer;
+				}
+			}
+
+			// final decode (in case any remains)
+			buffer += decoder.decode();
+			responseMessage = buffer;
 		} catch (err) {
-			responseMessage = `Run failed: ${err}`;
+			responseMessage = err instanceof Error ? err.message : `${err}`;
 		} finally {
 			isRunning = false;
 		}

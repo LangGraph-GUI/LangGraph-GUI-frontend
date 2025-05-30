@@ -66,4 +66,8 @@
 	export function RemoveNode(nodeId: string): void {
 		currentNodes.update((nodes) => nodes.filter((n) => n.id !== nodeId));
 	}
+
+	export function RemoveEdge(edgeId: string): void {
+		// TODO imp this
+	}
 </script>

@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { handleUpload, handleDownload, handleCleanCache } from './FileTransmit.svelte';
 	import { openRunWindow, openSidebar, openConfigWindow } from './menu.store';
+	import { OpenDoc } from '../../doc/open-doc.svelte';
 
 	let fileInput: HTMLInputElement;
 
@@ -36,51 +37,84 @@
 		e.preventDefault();
 		openConfigWindow.set(true);
 	}
+
+	function triggerDoc(e: MouseEvent) {
+		e.preventDefault();
+		OpenDoc();
+	}
 </script>
 
-<div
-	class="fixed top-0 left-0 z-10 h-full w-52 transform bg-white shadow-lg
-    transition-transform duration-300 ease-in-out"
-	style="transform: translateX({contentOffset}px)"
->
-	<button
-		class="absolute top-4 -right-10 h-10 w-10 cursor-pointer rounded-l-md border border-gray-300 bg-white text-2xl leading-none"
-		onclick={toggleMenu}>☰</button
-	>
+<div class="relative flex min-h-screen">
+	{#if !$openSidebar}
+		<button
+			class="absolute top-4 left-4 z-20 rounded-md border border-gray-300 bg-white p-2 shadow hover:bg-gray-100 focus:outline-none"
+			onclick={toggleMenu}>☰</button
+		>
+	{/if}
 
-	<nav class="p-4">
-		<ul class="space-y-2">
+	<!-- SLIDING SIDEBAR -->
+	<div
+		class="fixed top-0 left-0 z-10 h-full w-52 bg-white shadow-lg transition-transform duration-300 ease-in-out"
+		style="transform: translateX({contentOffset}px);"
+	>
+		<!-- CLOSE BUTTON -->
+		<div class="flex justify-end p-4">
+			<button
+				class="rounded-md border border-gray-300 bg-white p-1 shadow-sm hover:bg-gray-50 focus:outline-none"
+				onclick={toggleMenu}>«</button
+			>
+		</div>
+
+		<!-- NAV -->
+		<nav class="space-y-3 px-4">
 			<!-- Upload -->
-			<li>
-				<a href="upload" onclick={triggerFileDialog} class="text-blue-600 hover:underline">
-					File Upload
-				</a>
+			<div>
+				<button
+					class="w-full rounded bg-blue-300 px-3 py-2 text-left text-white hover:bg-blue-400"
+					onclick={triggerFileDialog}>File Upload</button
+				>
 				<input type="file" multiple bind:this={fileInput} onchange={handleUpload} class="hidden" />
-			</li>
+			</div>
 
 			<!-- Download -->
-			<li>
-				<a href="download" onclick={triggerDownload} class="text-blue-600 hover:underline">
-					Download Workspace
-				</a>
-			</li>
+			<button
+				class="w-full rounded bg-blue-300 px-3 py-2 text-left text-white hover:bg-blue-400"
+				onclick={triggerDownload}>Download Workspace</button
+			>
 
 			<!-- Clean Cache -->
-			<li>
-				<a href="clean" onclick={triggerCleanCache} class="text-blue-600 hover:underline">
-					Clean Cache
-				</a>
-			</li>
+			<button
+				class="w-full rounded bg-blue-300 px-3 py-2 text-left text-white hover:bg-blue-400"
+				onclick={triggerCleanCache}>Clean Cache</button
+			>
 
-			<!-- Run Window -->
-			<li>
-				<a href="run" onclick={triggerRun} class="text-blue-600 hover:underline"> Run </a>
-			</li>
+			<!-- Run -->
+			<button
+				class="w-full rounded bg-purple-400 px-3 py-2 text-left text-white hover:bg-purple-500"
+				onclick={triggerRun}>Run</button
+			>
 
-			<!-- Config Window -->
-			<li>
-				<a href="run" onclick={triggerConfig} class="text-blue-600 hover:underline"> Config </a>
-			</li>
-		</ul>
-	</nav>
+			<!-- Config -->
+			<button
+				class="w-full rounded bg-gray-300 px-3 py-2 text-left text-white hover:bg-gray-400"
+				onclick={triggerConfig}>Config</button
+			>
+
+			<!-- Documentation -->
+			<button
+				class="w-full rounded bg-gray-300 px-3 py-2 text-left text-white hover:bg-gray-400"
+				onclick={triggerDoc}>Documentation</button
+			>
+		</nav>
+	</div>
+
+	<!-- MAIN CONTENT: shifts over when sidebar opens -->
+	<div class="content-area flex-1" style="margin-left: {$openSidebar ? '200px' : '0'};"></div>
 </div>
+
+<style>
+	/* Smooth content shift when sidebar opens/closes */
+	.content-area {
+		transition: margin-left 0.3s ease-in-out;
+	}
+</style>
