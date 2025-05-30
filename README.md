@@ -7,6 +7,8 @@ see [LangGraph-GUI](https://github.com/LangGraph-GUI/LangGraph-GUI)
 
 SSOT is Nodes, singals to Edges
 ```
-			bind:nodes={$currentNodes}
-			edges={$currentEdges} 
+bind:nodes={$currentNodes}
+edges={$currentEdges} 
 ```
+
+Thus, everything such add edge, remove edge, that all modify node.data then signals trigger edge update
