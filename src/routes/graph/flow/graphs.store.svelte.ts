@@ -4,7 +4,7 @@ import type { Edge } from '@xyflow/svelte';
 import type { FlowNode } from './node-schema';
 
 // The single source of truth for all graphs
-export const graphs = writable<Record<string, FlowNode[]>>({});
+export const graphs = writable<Record<string, FlowNode[]>>({ root: [] });
 export const usingSubgraph = writable<string>('root');
 export const serial_number = writable<number>(1);
 

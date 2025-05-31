@@ -2,9 +2,14 @@
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { saveGraphs, loadGraphs } from '../flow/graphs-io.svelte';
 	import { graphs, usingSubgraph } from '../flow/graphs.store.svelte';
-	import { addSubGraph, renameSubGraph, removeSubGraph } from '../flow/graphs-algo.svelte';
+	import { saveGraphs, loadGraphs, saveSubGraph, loadSubGraph } from '../flow/graphs-io.svelte';
+	import {
+		addSubGraph,
+		renameSubGraph,
+		removeSubGraph,
+		CleanGraphs
+	} from '../flow/graphs-algo.svelte';
 
 	let isGraphsMenuOpen = $state(false);
 	let graphsMenuRef: HTMLDivElement;
@@ -28,7 +33,7 @@
 	};
 
 	const handleNewGraphs = () => {
-		// Implement your logic here (currently does nothing)
+		CleanGraphs();
 		closeMenus();
 	};
 
@@ -43,12 +48,12 @@
 	};
 
 	const handleLoadSubGraph = () => {
-		// Implement your logic here (currently does nothing)
+		loadSubGraph();
 		closeMenus();
 	};
 
 	const handleSaveSubGraph = () => {
-		// Implement your logic here (currently does nothing)
+		saveSubGraph();
 		closeMenus();
 	};
 

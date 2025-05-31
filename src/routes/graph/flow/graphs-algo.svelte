@@ -120,4 +120,10 @@
 		}
 		return map;
 	}
+
+	export function CleanGraphs() {
+		graphs.set({ root: [] });
+		serial_number.set(1);
+		usingSubgraph.set('root');
+	}
 </script>
