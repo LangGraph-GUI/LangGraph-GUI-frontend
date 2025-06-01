@@ -91,4 +91,84 @@
 			})
 		);
 	}
+
+	export function NodeVerify(allNodes: FlowNode[]): FlowNode[] {
+		// Build a map from node-id → FlowNode, so we can look up types of any referenced node
+		const idToNode = new Map<string, FlowNode>();
+		for (const n of allNodes) {
+			idToNode.set(n.id, n);
+		}
+
+		return allNodes.map((orig) => {
+			// Clone the node object (and its data) so we don't mutate the original
+			const updated: FlowNode = {
+				...orig,
+				data: {
+					...orig.data,
+					// we'll rebuild nexts/true_next/false_next below
+					nexts: new Set(orig.data.nexts),
+					true_next: orig.data.true_next,
+					false_next: orig.data.false_next
+				}
+			};
+
+			const nodeType = updated.data.type;
+
+			// 1. If this is a CONDITION node, we must clear nexts entirely.
+			if (nodeType === NodeType.CONDITION) {
+				updated.data.nexts = new Set();
+			} else {
+				// 2. If NOT a CONDITION, forcibly null out true/false branches
+				updated.data.true_next = null;
+				updated.data.false_next = null;
+			}
+
+			// 3. If this is a TOOL node, also clear everything (nexts + branches)
+			if (nodeType === NodeType.TOOL) {
+				updated.data.nexts = new Set();
+				updated.data.true_next = null;
+				updated.data.false_next = null;
+			}
+
+			// 4. Now remove any pointers whose target node is of type TOOL or START
+			//    – for “nexts” (Set<string>):
+			const cleanedNexts = new Set<string>();
+			for (const nextId of updated.data.nexts) {
+				const target = idToNode.get(nextId);
+				if (!target) continue; // skip if no such node
+				const tType = target.data.type;
+				// only keep if tType is NOT TOOL or START
+				if (tType !== NodeType.TOOL && tType !== NodeType.START) {
+					cleanedNexts.add(nextId);
+				}
+			}
+			updated.data.nexts = cleanedNexts;
+
+			//    – for true_next:
+			if (updated.data.true_next) {
+				const trueTarget = idToNode.get(updated.data.true_next);
+				if (
+					!trueTarget ||
+					trueTarget.data.type === NodeType.TOOL ||
+					trueTarget.data.type === NodeType.START
+				) {
+					updated.data.true_next = null;
+				}
+			}
+
+			//    – for false_next:
+			if (updated.data.false_next) {
+				const falseTarget = idToNode.get(updated.data.false_next);
+				if (
+					!falseTarget ||
+					falseTarget.data.type === NodeType.TOOL ||
+					falseTarget.data.type === NodeType.START
+				) {
+					updated.data.false_next = null;
+				}
+			}
+
+			return updated;
+		});
+	}
 </script>

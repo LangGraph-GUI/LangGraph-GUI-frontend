@@ -4,18 +4,18 @@
 	import { NodeType } from './node-schema';
 
 	let { node_type = $bindable() } = $props();
-	let is_start = $derived(node_type !== NodeType.START);
+	let is_start = $derived(node_type === NodeType.START);
 	let is_condition = $derived(node_type === NodeType.CONDITION);
-	let not_condition = $derived(!is_condition);
+	let is_tool = $derived(node_type === NodeType.TOOL);
 </script>
 
 <!-- Target handle on left - show for all except START -->
 <Handle
 	id="in"
 	type="target"
-	isConnectable={is_start}
+	isConnectable={!is_start && !is_tool}
 	position={Position.Left}
-	style="visibility: {is_start ? 'visible' : 'hidden'};
+	style="visibility: {!is_start && !is_tool ? 'visible' : 'hidden'};
 		left: -4px; top: calc(50% - 4px); width:8px; height:8px; "
 />
 
@@ -23,9 +23,9 @@
 <Handle
 	id="next"
 	type="source"
-	isConnectable={not_condition}
+	isConnectable={!is_condition && !is_tool}
 	position={Position.Right}
-	style="visibility: {not_condition ? 'visible' : 'hidden'};
+	style="visibility: {!is_condition && !is_tool ? 'visible' : 'hidden'};
 		right: -4px; top: calc(50% - 4px); width:8px; height:8px; "
 />
 
@@ -34,15 +34,15 @@
 	id="true"
 	type="source"
 	isConnectable={is_condition}
-	position={Position.Top}
+	position={Position.Right}
 	style="visibility: {is_condition ? 'visible' : 'hidden'}; 
-		top: -4px; left: calc(50% - 4px); width:8px; height:8px; background: green;"
+		right: -4px; top: 25%; width:8px; height:8px; background: green;"
 />
 <Handle
 	id="false"
 	type="source"
 	isConnectable={is_condition}
-	position={Position.Bottom}
+	position={Position.Right}
 	style="visibility: {is_condition ? 'visible' : 'hidden'}; 
-		bottom: -4px; left: calc(50% - 4px); width:8px; height:8px; background: red;"
+		right: -4px; top: 75%; width:8px; height:8px; background: red;"
 />

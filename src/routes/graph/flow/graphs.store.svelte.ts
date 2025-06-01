@@ -2,6 +2,7 @@
 import { writable, derived, get } from 'svelte/store';
 import type { Edge } from '@xyflow/svelte';
 import type { FlowNode } from './node-schema';
+import { NodeVerify } from './graph-algo.svelte';
 
 // The single source of truth for all graphs
 export const graphs = writable<Record<string, FlowNode[]>>({ root: [] });
@@ -17,7 +18,7 @@ export const currentNodes = (() => {
 			const key = get(usingSubgraph);
 			graphs.update((gmap) => {
 				if (!gmap[key]) gmap[key] = [];
-				gmap[key] = newNodes;
+				gmap[key] = NodeVerify(newNodes);
 				return gmap;
 			});
 		},
@@ -25,7 +26,7 @@ export const currentNodes = (() => {
 			const key = get(usingSubgraph);
 			graphs.update((gmap) => {
 				if (!gmap[key]) gmap[key] = [];
-				gmap[key] = fn(gmap[key]);
+				gmap[key] = NodeVerify(fn(gmap[key]));
 				return gmap;
 			});
 		}
